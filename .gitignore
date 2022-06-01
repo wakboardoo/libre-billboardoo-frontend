@@ -1,6 +1,8 @@
 node_modules
 package-lock.json
 
+app/styles/app.css
+
 /.cache
 /.idea
 /build
