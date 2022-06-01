@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline';
 
 interface Props {
   id: string
@@ -14,7 +14,7 @@ const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
     <div
       className='group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer'
       onClick={() => {
-        if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus()
+        if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus();
       }}
     >
       <div className='flex items-center gap-3'>
@@ -23,9 +23,9 @@ const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
           alt={`${artist} ${title} 썸네일`}
           loading='lazy'
           decoding='async'
-          className='aspect-video object-cover object-center w-20'
+          className='aspect-video object-cover object-center w-14 md:w-20'
         />
-        <span className='w-8 text-gray-50 font-bold text-center'>{rank}</span>
+        <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{rank}</span>
 
         {rankChange === 'new' && <span className='w-4 text-center text-red-500 font-medium text-sm'>N</span>}
         {rankChange > 0 && (
@@ -41,15 +41,14 @@ const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
             <ChevronDownIcon className='h-4 w-4' />
           </span>
         )}
-
-        <div className='w-fit flex flex-2 flex-col truncate'>
-          <span className='text-gray-50 font-normal truncate'>{title}</span>
-          <span className='text-gray-400 font-normal text-sm'>{count.toLocaleString('ko-KR')}회</span>
-        </div>
       </div>
-      <span className='basis-[1] text-gray-400 font-normal truncate'>{artist}</span>
+      <div className='pl-4 flex w-1/3 flex-col truncate'>
+        <span className='text-gray-50 font-normal truncate'>{title}</span>
+        <span className='text-gray-400 font-normal text-sm'>{count.toLocaleString('ko-KR')}회</span>
+      </div>
+      <span className='flex-1 text-right text-gray-400 font-normal truncate'>{artist}</span>
     </div>
-  )
-}
+  );
+};
 
-export default ChartItem
+export default ChartItem;

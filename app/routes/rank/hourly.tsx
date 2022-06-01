@@ -1,12 +1,12 @@
-import ChartItem from '@components/ChartItem'
-import Play50Button from '@components/Play50Button'
-import SmallHeader from '@components/SmallHeader'
-import type { LoaderFunction } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
-import type { ChartDataResponse, RankResponse } from '@utils/types'
-import dayjs from 'dayjs'
-import { motion } from 'framer-motion'
-import { useRef, useEffect } from 'react'
+import ChartItem from '@components/ChartItem';
+import Play50Button from '@components/Play50Button';
+import SmallHeader from '@components/SmallHeader';
+import type { LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import type { ChartDataResponse, RankResponse } from '@utils/types';
+import dayjs from 'dayjs';
+import { motion } from 'framer-motion';
+import { useRef, useEffect } from 'react';
 
 interface LoaderData {
   ranks: RankResponse
@@ -17,31 +17,31 @@ export const loader: LoaderFunction = async (): Promise<LoaderData> => {
   const [ranks, chartData] = await Promise.all([
     fetch('https://chart.zvz.be/api/rank/hourly'),
     fetch('https://chart.zvz.be/api/song/chart-data'),
-  ])
+  ]);
 
   return {
     ranks: await ranks.json(),
     chartData: await chartData.json(),
-  }
-}
+  };
+};
 
 const HourlyRank = () => {
-  const { ranks, chartData } = useLoaderData<LoaderData>()
-  const buttonsRef = useRef<HTMLDivElement>(null)
-  const headerRef = useRef<HTMLElement>(null)
+  const { ranks, chartData } = useLoaderData<LoaderData>();
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (buttonsRef.current) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          headerRef.current?.classList.toggle('hidden', entry.isIntersecting)
-          headerRef.current?.classList.toggle('flex', !entry.isIntersecting)
-        })
-      })
+          headerRef.current?.classList.toggle('hidden', entry.isIntersecting);
+          headerRef.current?.classList.toggle('flex', !entry.isIntersecting);
+        });
+      });
 
-      io.observe(buttonsRef.current)
+      io.observe(buttonsRef.current);
     }
-  }, [])
+  }, []);
 
   const button1to50 = (
     <Play50Button
@@ -50,7 +50,7 @@ const HourlyRank = () => {
       end={50}
       list={ranks.ranking.slice(0, 50).map((value) => value.videoIds[0])}
     />
-  )
+  );
 
   const button51to100 = (
     <Play50Button
@@ -59,7 +59,7 @@ const HourlyRank = () => {
       end={100}
       list={ranks.ranking.slice(50, 100).map((value) => value.videoIds[0])}
     />
-  )
+  );
 
   return (
     <>
@@ -68,7 +68,7 @@ const HourlyRank = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className='p-14'
+        className='px-4 py-14 md:p-14'
       >
         <h1 className='text-gray-50 text-4xl font-bold'>매시간 차트</h1>
         <p className='text-gray-400 text-lg'>{dayjs(ranks.timestamp * 1000).format('M월 D일 a h시')} 업데이트</p>
@@ -96,7 +96,7 @@ const HourlyRank = () => {
         </ul>
       </motion.div>
     </>
-  )
-}
+  );
+};
 
-export default HourlyRank
+export default HourlyRank;

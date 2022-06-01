@@ -1,6 +1,8 @@
 node_modules
+package-lock.json
 
 /.cache
+/.idea
 /build
 /public
 .env

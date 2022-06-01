@@ -1,5 +1,5 @@
-import DefaultLayout from '@layouts/DefaultLayout'
-import { Outlet } from '@remix-run/react'
+import DefaultLayout from '@layouts/DefaultLayout';
+import { Outlet } from '@remix-run/react';
 
 
 const RankParent = () => {
@@ -7,7 +7,7 @@ const RankParent = () => {
     <DefaultLayout>
       <Outlet />
     </DefaultLayout>
-  )
-}
+  );
+};
 
-export default RankParent
+export default RankParent;
