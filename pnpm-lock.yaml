@@ -18,6 +18,7 @@ specifiers:
   eslint: ^8.16.0
   eslint-config-airbnb-typescript: ^17.0.0
   framer-motion: ^6.3.5
+  hamburger-react: ^2.5.0
   postcss: ^8.4.14
   react: ^18.1.0
   react-dom: ^18.1.0
@@ -33,6 +34,7 @@ dependencies:
   '@remix-run/serve': 1.5.1_ef5jwxihqo6n7gxfmzogljlgcm
   dayjs: 1.11.2
   framer-motion: 6.3.5_ef5jwxihqo6n7gxfmzogljlgcm
+  hamburger-react: 2.5.0_react@18.1.0
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-responsive: 9.0.0-beta.8_react@18.1.0
@@ -3581,6 +3583,14 @@ packages:
       pumpify: 1.5.1
       through2: 2.0.5
     dev: true
+
+  /hamburger-react/2.5.0_react@18.1.0:
+    resolution: {integrity: sha512-5GSXe+ucxTPJ0SkhIsPQ/PRDweZPIKya1lfahAuExx31SdheeUA4uOPfQIAirbKona8hvo79VDr5LJQzPXsdpw==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      react: 18.1.0
+    dev: false
 
   /hard-rejection/2.1.0:
     resolution: {integrity: sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==}
