@@ -17,9 +17,9 @@ const SummaryRank = ({ title, href, ranks }: Props) => {
           <ChevronRightIcon className='w-8 h-8' />
         </Link>
       </h1>
-      <div className='grid grid-rows-5 grid-flow-col no-scrollbar overflow-x-auto space-y-3 mt-3'>
+      <div className='grid grid-rows-5 grid-flow-col no-scrollbar overflow-x-auto mt-3'>
         {(ranks ? ranks.slice(0, 10) : []).map((rank, index) => (
-          <div key={rank.videoIds[0]} className='flex flex-1 w-72 md:w-[28rem] items-center gap-3 hover:bg-neutral-900 cursor-pointer'
+          <div key={rank.videoIds[0]} className='flex flex-1 w-72 md:w-[28rem] items-center gap-3 p-2 hover:bg-neutral-900 cursor-pointer'
             onClick={() => {
               if (window) window.open(`https://www.youtube.com/watch?v=${rank.videoIds[0]}`, '_blank')?.focus();
             }}
