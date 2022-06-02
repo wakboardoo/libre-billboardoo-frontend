@@ -11,15 +11,15 @@ interface Props {
 const SummaryRank = ({ title, href, ranks }: Props) => {
   return (
     <>
-      <h1 className='text-gray-50 text-4xl font-bold'>
-        <Link to={href} className='flex items-center gap-2'>
+      <h1 className='w-fit group text-gray-50 text-4xl font-bold'>
+        <Link to={href} className='flex items-center gap-1'>
           {title}
-          <ChevronRightIcon className='w-8 h-8' />
+          <ChevronRightIcon className='w-8 h-8 text-gray-400 group-hover:text-gray-50' />
         </Link>
       </h1>
-      <div className='grid grid-rows-5 grid-flow-col no-scrollbar overflow-x-auto mt-3'>
+      <div className='grid grid-rows-5 grid-flow-col no-scrollbar overflow-x-auto mt-3 pr-[20vw] md:pr-0'>
         {(ranks ? ranks.slice(0, 10) : []).map((rank, index) => (
-          <div key={rank.videoIds[0]} className='flex flex-1 w-72 md:w-[28rem] items-center gap-3 p-2 hover:bg-neutral-900 cursor-pointer'
+          <div key={rank.videoIds[0]} className='flex flex-1 w-[80vw] md:w-[28rem] items-center gap-3 p-2 hover:bg-neutral-900 cursor-pointer'
             onClick={() => {
               if (window) window.open(`https://www.youtube.com/watch?v=${rank.videoIds[0]}`, '_blank')?.focus();
             }}
@@ -29,7 +29,7 @@ const SummaryRank = ({ title, href, ranks }: Props) => {
               alt={`${rank.artist} ${rank.title} 썸네일`}
               loading='lazy'
               decoding='async'
-              className='aspect-video object-cover object-center w-12 md:w-20'
+              className='aspect-video object-cover object-center w-16 md:w-20'
             />
 
             <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{index + 1}</span>
