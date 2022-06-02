@@ -1,5 +1,6 @@
-import { Disclosure } from '@headlessui/react';
-import { MenuIcon, TrendingUpIcon, XIcon } from '@heroicons/react/outline';
+import { Disclosure, Transition } from '@headlessui/react';
+import { TrendingUpIcon } from '@heroicons/react/outline';
+import Hamburger from 'hamburger-react';
 import { Link } from '@remix-run/react';
 import { classNames } from '@utils/classNames';
 import links from '@utils/links';
@@ -16,37 +17,42 @@ const MobileHeader = () => {
               </h1>
             </Link>
             <Disclosure.Button>
-              {open ? (
-                <XIcon className='text-gray-50 w-8 h-8' />
-              ) : (
-                <MenuIcon className='text-gray-50 w-8 h-8' />
-              )}
+              <Hamburger size={24} rounded color='white' onToggle={_ => open}/>
             </Disclosure.Button>
           </div>
-          <Disclosure.Panel className='bg-black absolute w-full'>
-            <div className="pt-0 pb-4 px-4 space-y-3">
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={classNames(
-                    location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 hover:text-gray-50',
-                    'flex items-center group font-light',
-                    'text-xl tracking-tight',
-                  )}
-                  onClick={() => close()}
-                >
-                  <TrendingUpIcon
+          <Transition
+            enter="transition duration-100 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-75 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <Disclosure.Panel className='bg-black absolute w-full'>
+              <div className="pt-0 pb-4 px-4 space-y-3">
+                {links.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
                     className={classNames(
-                      location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 group-hover:text-gray-50',
-                      'w-5 h-5 mr-2',
+                      location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 hover:text-gray-50',
+                      'flex items-center group font-light',
+                      'text-xl tracking-tight',
                     )}
-                  />
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          </Disclosure.Panel>
+                    onClick={() => close()}
+                  >
+                    <TrendingUpIcon
+                      className={classNames(
+                        location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 group-hover:text-gray-50',
+                        'w-5 h-5 mr-2',
+                      )}
+                    />
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </Disclosure.Panel>
+          </Transition>
         </>
       )}
     </Disclosure>
