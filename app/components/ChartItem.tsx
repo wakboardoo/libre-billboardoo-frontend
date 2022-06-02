@@ -25,22 +25,26 @@ const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
           decoding='async'
           className='aspect-video object-cover object-center w-14 md:w-20'
         />
-        <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{rank}</span>
 
-        {rankChange === 'new' && <span className='w-4 text-center text-red-500 font-medium text-sm'>N</span>}
-        {rankChange > 0 && (
-          <span className='text-center text-green-500 font-medium text-sm'>
-            <ChevronUpIcon className='h-4 w-4' />
-            {rankChange}
-          </span>
-        )}
-        {rankChange === 0 && <MinusIcon className='h-4 w-4 text-gray-400' />}
-        {rankChange < 0 && (
-          <span className='text-center text-red-500 font-medium text-sm'>
-            {Math.abs(rankChange as number)}
-            <ChevronDownIcon className='h-4 w-4' />
-          </span>
-        )}
+        <div className='flex flex-col md:flex-row justify-center items-center md:gap-3'>
+          <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{rank}</span>
+
+          {rankChange === 'new' && <span className='w-4 text-center text-red-500 font-medium text-sm'>N</span>}
+          {rankChange > 0 && (
+            <span className='flex gap-1 md:flex-col text-center text-green-500 font-medium text-sm'>
+              <ChevronUpIcon className='h-4 w-4' />
+              {rankChange}
+            </span>
+          )}
+          {rankChange === 0 && <MinusIcon className='h-4 w-4 text-gray-400' />}
+          {rankChange < 0 && (
+            <span className='flex gap-1 flex-row-reverse md:flex-col items-center text-center text-red-500 font-medium text-sm'>
+              {Math.abs(rankChange as number)}
+              <ChevronDownIcon className='h-4 w-4' />
+            </span>
+          )}
+        </div>
+
       </div>
       <div className='pl-4 flex w-1/3 flex-col truncate'>
         <span className='text-gray-50 font-normal truncate'>{title}</span>
