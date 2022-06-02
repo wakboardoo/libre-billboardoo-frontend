@@ -10,7 +10,7 @@ const MobileHeader = () => {
     <Disclosure as='header'>
       {({ open, close }) => (
         <>
-          <div className='flex justify-between items-center p-4'>
+          <div className='flex justify-between items-center pl-4 pr-2 py-2'>
             <Link to='/'>
               <h1 className='flex flex-row font-semibold text-gray-50 text-2xl'>
                 Billboardoo
