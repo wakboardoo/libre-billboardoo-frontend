@@ -1,5 +1,6 @@
 import ChartItem from '@components/ChartItem';
 import Play50Button from '@components/Play50Button';
+import RankHeader from '@components/RankHeader';
 import SmallHeader from '@components/SmallHeader';
 import type { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -70,8 +71,7 @@ const TwentyFourHoursRank = () => {
         transition={{ duration: 0.5 }}
         className='px-4 py-14 md:p-14'
       >
-        <h1 className='text-gray-50 text-4xl font-bold'>24시간 차트</h1>
-        <p className='text-gray-400 text-lg'>{dayjs(ranks.timestamp * 1000).format('M월 D일 a h시')} 업데이트</p>
+        <RankHeader title='24시간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
         <div ref={buttonsRef} className='mt-5 flex gap-3'>
           {button1to50}
