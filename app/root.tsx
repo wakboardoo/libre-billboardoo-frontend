@@ -30,7 +30,7 @@ export default function App() {
         <Links />
         <title>Billboardoo</title>
       </head>
-      <body className='h-full bg-black flex'>
+      <body className='h-full bg-black flex flex-col md:flex-row'>
         <Outlet />
         <ScrollRestoration />
         <Scripts />

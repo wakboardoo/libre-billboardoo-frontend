@@ -3,7 +3,7 @@ import { ChevronRightIcon } from '@heroicons/react/solid';
 
 const MobileHeader = () => {
   return (
-    <header className='block md:hidden'>
+    <header>
       <Link to='/'>
         <h1 className='flex flex-row font-semibold text-gray-50 text-2xl p-4'>
           Billboardoo
