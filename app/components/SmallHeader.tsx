@@ -12,11 +12,11 @@ const SmallHeader = ({ title, buttons }: Props, ref: React.ForwardedRef<HTMLElem
     <header
       ref={ref}
       className={classNames(
-        'hidden sticky top-0 z-50 justify-between items-center px-4 py-2 md:px-14 lg:py-4',
+        'hidden sticky top-0 z-50 justify-end md:justify-between items-center px-4 py-2 md:px-14 lg:py-4',
         'bg-black/20 backdrop-blur-md',
       )}
     >
-      <Link to='/'>
+      <Link to='/' className='hidden md:block'>
         <h1 className='text-gray-50 text-base md:text-2xl font-bold'>
           {title}
         </h1>
