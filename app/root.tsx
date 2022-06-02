@@ -2,7 +2,6 @@ import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import globalCss from '@styles/global.css';
 import appCss from '@styles/app.css';
-import pretendardCss from 'node_modules/pretendard/dist/web/static/pretendard.css';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -18,7 +17,7 @@ export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: globalCss },
     { rel: 'stylesheet', href: appCss },
-    { rel: 'stylesheet', href: pretendardCss },
+    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css', crossOrigin: 'anonymous' },
   ];
 };
 
