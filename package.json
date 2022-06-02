@@ -19,7 +19,8 @@
     "framer-motion": "^6.3.5",
     "pretendard": "^1.2.2",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-responsive": "9.0.0-beta.8"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.5.1",
