@@ -17,7 +17,7 @@ const MobileHeader = () => {
               </h1>
             </Link>
             <Disclosure.Button>
-              <Hamburger size={24} rounded color='white' onToggle={_ => open}/>
+              <Hamburger size={24} rounded color='white' toggled={open}/>
             </Disclosure.Button>
           </div>
           <Transition
