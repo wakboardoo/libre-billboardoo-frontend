@@ -15,6 +15,7 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => {
   return [
+    { rel: 'icon', href: '/favicon.png', type: 'image/png' },
     { rel: 'stylesheet', href: globalCss },
     { rel: 'stylesheet', href: appCss },
     { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css', crossOrigin: 'anonymous' },
