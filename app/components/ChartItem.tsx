@@ -12,7 +12,7 @@ interface Props {
 const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
   return (
     <div
-      className='group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer'
+      className='group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3'
       onClick={() => {
         if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus();
       }}
@@ -44,12 +44,13 @@ const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
             </span>
           )}
         </div>
-
       </div>
-      <div className='pl-4 flex w-1/3 flex-col truncate'>
+
+      <div className='flex w-auto max-w-[50%] md:max-w-none flex-col truncate'>
         <span className='text-gray-50 font-normal truncate'>{title}</span>
         <span className='text-gray-400 font-normal text-sm'>{count.toLocaleString('ko-KR')}회</span>
       </div>
+
       <span className='flex-1 text-right text-gray-400 font-normal truncate'>{artist}</span>
     </div>
   );
