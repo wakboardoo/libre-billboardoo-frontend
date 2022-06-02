@@ -3,13 +3,8 @@
         "**/.cache": true,
         "**/node_modules": true
     },
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "prettier.jsxSingleQuote": true,
-    "prettier.printWidth": 120,
-    "prettier.singleQuote": true,
-    "prettier.semi": false
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+    },
+    "editor.formatOnSave": false,
 }
