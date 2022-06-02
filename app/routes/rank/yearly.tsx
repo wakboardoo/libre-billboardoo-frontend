@@ -77,7 +77,7 @@ const YearlyRank = () => {
         transition={{ duration: 0.5 }}
         className='px-4 md:p-14'
       >
-        <RankHeader title='연간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
+        <RankHeader title='연간 차트' updateDate={dayjs(ranks.timestamp * 1000)} isYearly={true} />
 
         <div ref={buttonsRef} className='mt-5 flex gap-3'>
           {button1to50}
