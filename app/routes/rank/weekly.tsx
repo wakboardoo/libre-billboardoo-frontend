@@ -48,8 +48,8 @@ const WeeklyRank = () => {
     <Play50Button
       key='play1to50'
       start={1}
-      end={50}
-      list={ranks.ranking.slice(0, 50).map((value) => value.videoIds[0])}
+      end={Math.min(ranks.ranking.length, 100)}
+      list={ranks.ranking.slice(0, Math.min(ranks.ranking.length, 50)).map((value) => value.videoIds[0])}
     />
   );
 
@@ -57,19 +57,25 @@ const WeeklyRank = () => {
     <Play50Button
       key='play51to100'
       start={51}
-      end={100}
-      list={ranks.ranking.slice(50, 100).map((value) => value.videoIds[0])}
+      end={Math.min(ranks.ranking.length, 100)}
+      list={ranks.ranking.slice(50, Math.min(ranks.ranking.length, 100)).map((value) => value.videoIds[0])}
     />
   );
 
   return (
     <>
-      <SmallHeader ref={headerRef} title='주간 차트' buttons={[button1to50, button51to100]} />
+      <SmallHeader ref={headerRef} title='주간 차트' buttons={(() => {
+        if (ranks.ranking.length <= 50) {
+          return [button1to50];
+        } else {
+          return [button1to50, button51to100];
+        }
+      })()} />
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className='px-4 py-14 md:p-14'
+        className='px-4 md:p-14'
       >
         <RankHeader title='주간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 

@@ -4,30 +4,24 @@ import RankHeader from '@components/RankHeader';
 import SmallHeader from '@components/SmallHeader';
 import type { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import type { ChartDataResponse, RankResponse } from '@utils/types';
+import type { RankResponse } from '@utils/types';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface LoaderData {
   ranks: RankResponse
-  chartData: ChartDataResponse
 }
 
 export const loader: LoaderFunction = async (): Promise<LoaderData> => {
-  const [ranks, chartData] = await Promise.all([
-    fetch('https://chart.zvz.be/api/rank/monthly'),
-    fetch('https://chart.zvz.be/api/song/chart-data'),
-  ]);
 
   return {
-    ranks: await ranks.json(),
-    chartData: await chartData.json(),
+    ranks: await (await fetch('https://chart.zvz.be/api/rank/new')).json(),
   };
 };
 
-const MonthlyRank = () => {
-  const { ranks, chartData } = useLoaderData<LoaderData>();
+const NewestRank = () => {
+  const { ranks } = useLoaderData<LoaderData>();
   const buttonsRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -64,7 +58,7 @@ const MonthlyRank = () => {
 
   return (
     <>
-      <SmallHeader ref={headerRef} title='월간 차트' buttons={(() => {
+      <SmallHeader ref={headerRef} title='신곡 차트' buttons={(() => {
         if (ranks.ranking.length <= 50) {
           return [button1to50];
         } else {
@@ -77,7 +71,7 @@ const MonthlyRank = () => {
         transition={{ duration: 0.5 }}
         className='px-4 md:p-14'
       >
-        <RankHeader title='월간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
+        <RankHeader title='신곡 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
         <div ref={buttonsRef} className='mt-5 flex gap-3'>
           {button1to50}
@@ -90,7 +84,7 @@ const MonthlyRank = () => {
               <ChartItem
                 id={item.videoIds[0]}
                 rank={index + 1}
-                rankChange={chartData[item.artist][item.title].previousRank.hourly - (index + 1)}
+                rankChange='new'
                 title={item.title}
                 artist={item.artist}
                 count={item.count}
@@ -103,4 +97,4 @@ const MonthlyRank = () => {
   );
 };
 
-export default MonthlyRank;
+export default NewestRank;
