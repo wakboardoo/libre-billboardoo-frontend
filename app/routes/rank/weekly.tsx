@@ -48,7 +48,7 @@ const WeeklyRank = () => {
     <Play50Button
       key='play1to50'
       start={1}
-      end={Math.min(ranks.ranking.length, 100)}
+      end={Math.min(ranks.ranking.length, 50)}
       list={ranks.ranking.slice(0, Math.min(ranks.ranking.length, 50)).map((value) => value.videoIds[0])}
     />
   );
