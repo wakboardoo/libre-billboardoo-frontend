@@ -91,7 +91,7 @@ const MonthlyRank = () => {
               <ChartItem
                 id={item.videoIds[0]}
                 rank={index + 1}
-                rankChange={chartData[item.artist][item.title].previousRank.hourly - (index + 1)}
+                rankChange={chartData[item.artist][item.title].previousRank.monthly - (index + 1)}
                 title={item.title}
                 artist={item.artist}
                 count={item.count}
