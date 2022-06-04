@@ -11,7 +11,7 @@ export const loader: LoaderFunction = () => {
       scope: '/',
       display: 'standalone',
       background_color: '#171717',
-      theme_color: '#525252',
+      theme_color: '#000000',
       shortcuts: [
         {
           name: 'Homepage',
