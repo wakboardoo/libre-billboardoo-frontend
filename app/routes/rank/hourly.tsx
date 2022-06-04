@@ -62,15 +62,17 @@ const HourlyRank = () => {
     />
   );
 
+  const getButtons = () => {
+    if (ranks.ranking.length <= 50) {
+      return [button1to50];
+    } else {
+      return [button1to50, button51to100];
+    }
+  };
+
   return (
     <>
-      <SmallHeader ref={headerRef} title='매시간 차트' buttons={(() => {
-        if (ranks.ranking.length <= 50) {
-          return [button1to50];
-        } else {
-          return [button1to50, button51to100];
-        }
-      })()} />
+      <SmallHeader ref={headerRef} title='매시간 차트' buttons={getButtons()} />
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

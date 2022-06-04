@@ -62,15 +62,17 @@ const YearlyRank = () => {
     />
   );
 
+  const getButtons = () => {
+    if (ranks.ranking.length <= 50) {
+      return [button1to50];
+    } else {
+      return [button1to50, button51to100];
+    }
+  };
+
   return (
     <>
-      <SmallHeader ref={headerRef} title='연간 차트' buttons={(() => {
-        if (ranks.ranking.length <= 50) {
-          return [button1to50];
-        } else {
-          return [button1to50, button51to100];
-        }
-      })()} />
+      <SmallHeader ref={headerRef} title='연간 차트' buttons={getButtons()} />
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -80,8 +82,7 @@ const YearlyRank = () => {
         <RankHeader title='연간 차트' updateDate={dayjs(ranks.timestamp * 1000)} isYearly={true} />
 
         <div ref={buttonsRef} className='mt-5 flex gap-3'>
-          {button1to50}
-          {button51to100}
+          {getButtons()}
         </div>
 
         <span className='h-px w-full bg-neutral-600' aria-hidden='true' />

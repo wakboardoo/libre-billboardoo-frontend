@@ -56,15 +56,17 @@ const NewestRank = () => {
     />
   );
 
+  const getButtons = () => {
+    if (ranks.ranking.length <= 50) {
+      return [button1to50];
+    } else {
+      return [button1to50, button51to100];
+    }
+  };
+
   return (
     <>
-      <SmallHeader ref={headerRef} title='신곡 차트' buttons={(() => {
-        if (ranks.ranking.length <= 50) {
-          return [button1to50];
-        } else {
-          return [button1to50, button51to100];
-        }
-      })()} />
+      <SmallHeader ref={headerRef} title='신곡 차트' buttons={getButtons()} />
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -74,8 +76,7 @@ const NewestRank = () => {
         <RankHeader title='신곡 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
         <div ref={buttonsRef} className='mt-5 flex gap-3'>
-          {button1to50}
-          {button51to100}
+          {getButtons()}
         </div>
 
         <ul className='mt-5 space-y-3'>
