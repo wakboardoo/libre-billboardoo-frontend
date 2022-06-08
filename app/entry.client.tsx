@@ -43,6 +43,10 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/**
+ * Related issue: https://github.com/ShafSpecs/remix-pwa/issues/25
+ */
+/*
 navigator.serviceWorker.ready
   .then((registration) => {
     const subscription = registration.pushManager.getSubscription();
@@ -71,3 +75,4 @@ navigator.serviceWorker.ready
       }),
     });
   });
+*/
