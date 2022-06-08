@@ -1,6 +1,9 @@
 import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline';
+import { classNames } from '@utils/classNames';
+import React from 'react';
 
 interface Props {
+  className?: string
   id: string
   rank: number
   rankChange: number | 'new'
@@ -9,10 +12,10 @@ interface Props {
   count: number
 }
 
-const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
+const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Props) => {
   return (
     <div
-      className='group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3'
+      className={classNames('group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3', className ?? '')}
       onClick={() => {
         if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus();
       }}
@@ -55,5 +58,7 @@ const ChartItem = ({ id, rank, rankChange, title, artist, count }: Props) => {
     </div>
   );
 };
+
+export const MemoizedChartItem = React.memo(ChartItem);
 
 export default ChartItem;
