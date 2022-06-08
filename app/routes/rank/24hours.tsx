@@ -74,27 +74,35 @@ const TwentyFourHoursRank = () => {
 
   return (
     <>
-      <SmallHeader ref={headerRef} title='24시간 차트' buttons={getButtons()} />
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className='h-full px-4 md:px-14'
+        className='h-full'
       >
         <Virtuoso
           style={{ height: '100%' }}
-          className='md:space-y-3'
           data={ranks.ranking}
           components={{
+            Scroller: React.forwardRef(({ style, ...props }, ref) => (
+              <div ref={ref} style={{ ...style }} className='' {...props}>
+                <SmallHeader ref={headerRef} title='24시간 차트' buttons={getButtons()} />
+                {props.children}
+              </div>
+            )),
+            List: React.forwardRef(({ style, children }, ref) => (
+              <div ref={ref} style={{ ...style }} className='mx-4 md:m-14 space-y-3'>
+                {children}
+              </div>
+            )),
             Header: () => (
-              <>
-                <div className='md:py-7'/>
+              <div className='mx-4 md:m-14'>
                 <RankHeader title='24시간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
                 <div ref={buttonsRef} className='my-5 flex gap-3'>
                   {getButtons()}
                 </div>
-              </>
+              </div>
             ),
           }}
           itemContent={(index, item) => (
