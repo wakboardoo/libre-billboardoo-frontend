@@ -7,7 +7,7 @@ const Aside = () => {
   const location = useLocation();
 
   return (
-    <aside className='block w-1/6 h-full bg-neutral-900 bg-opacity-60 overflow-y-auto'>
+    <aside className='block w-1/5 lg:w-1/6 h-full bg-neutral-900 bg-opacity-60 overflow-y-auto'>
       <div className='flex flex-col gap-5 p-5'>
         <Link to='/'>
           <h1 className='font-semibold text-gray-50 text-2xl'>Billboardoo</h1>
@@ -21,7 +21,7 @@ const Aside = () => {
                 className={classNames(
                   location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 hover:text-gray-50',
                   'flex items-center group font-light',
-                  'text-xl tracking-tight',
+                  'md:text-lg lg:text-xl tracking-tight',
                 )}
               >
                 <TrendingUpIcon
