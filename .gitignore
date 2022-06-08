@@ -7,4 +7,5 @@ app/styles/app.css
 /.idea
 /build
 /public/build
+/public/entry.worker.js
 .env
