@@ -1,4 +1,4 @@
-import ChartItem from '@components/ChartItem';
+import { MemoizedChartItem } from '@components/ChartItem';
 import Play50Button from '@components/Play50Button';
 import RankHeader from '@components/RankHeader';
 import SmallHeader from '@components/SmallHeader';
@@ -7,7 +7,8 @@ import { useLoaderData } from '@remix-run/react';
 import type { ChartDataResponse, RankResponse } from '@utils/types';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { Virtuoso } from 'react-virtuoso';
 
 interface LoaderData {
   ranks: RankResponse
@@ -72,35 +73,49 @@ const YearlyRank = () => {
 
   return (
     <>
-      <SmallHeader ref={headerRef} title='연간 차트' buttons={getButtons()} />
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className='px-4 md:p-14'
+        className='h-full'
       >
-        <RankHeader title='연간 차트' updateDate={dayjs(ranks.timestamp * 1000)} isYearly={true} />
+        <Virtuoso
+          style={{ height: '100%' }}
+          data={ranks.ranking}
+          components={{
+            Scroller: React.forwardRef(({ style, ...props }, ref) => (
+              <div ref={ref} style={{ ...style }} {...props}>
+                <SmallHeader ref={headerRef} title='연간 차트' buttons={getButtons()} />
+                {props.children}
+              </div>
+            )),
+            List: React.forwardRef(({ style, children }, ref) => (
+              <div ref={ref} style={{ ...style }} className='m-4 md:m-14 space-y-3'>
+                {children}
+              </div>
+            )),
+            Header: () => (
+              <div className='m-4 md:m-14'>
+                <RankHeader title='연간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
-        <div ref={buttonsRef} className='mt-5 flex gap-3'>
-          {getButtons()}
-        </div>
-
-        <span className='h-px w-full bg-neutral-600' aria-hidden='true' />
-
-        <ul className='mt-5 space-y-3'>
-          {ranks.ranking.map((item, index) => (
-            <li key={item.videoIds[0]}>
-              <ChartItem
-                id={item.videoIds[0]}
-                rank={index + 1}
-                rankChange={chartData[item.artist][item.title].previousRank.yearly - (index + 1)}
-                title={item.title}
-                artist={item.artist}
-                count={item.count}
-              />
-            </li>
-          ))}
-        </ul>
+                <div ref={buttonsRef} className='my-5 flex gap-3'>
+                  {getButtons()}
+                </div>
+              </div>
+            ),
+            Footer: () => <br/>,
+          }}
+          itemContent={(index, item) => (
+            <MemoizedChartItem
+              id={item.videoIds[0]}
+              rank={index + 1}
+              rankChange={chartData[item.artist][item.title].previousRank.yearly - (index + 1)}
+              title={item.title}
+              artist={item.artist}
+              count={item.count}
+            />
+          )}
+        />
       </motion.div>
     </>
   );
