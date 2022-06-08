@@ -79,15 +79,16 @@ const TwentyFourHoursRank = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className='h-full'
+        className='h-full px-4 md:px-14'
       >
         <Virtuoso
           style={{ height: '100%' }}
-          className='space-y-3 px-4 md:p-14'
+          className='md:space-y-3'
           data={ranks.ranking}
           components={{
             Header: () => (
               <>
+                <div className='md:py-7'/>
                 <RankHeader title='24시간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
                 <div ref={buttonsRef} className='my-5 flex gap-3'>
