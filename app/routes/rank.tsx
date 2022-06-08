@@ -83,7 +83,7 @@ const RankParent = () => {
       >
         <Outlet />
         <Virtuoso
-          style={{ height: '100%' }}
+          style={{ height: '100%', willChange: 'transform' }}
           data={ranks.ranking}
           components={{
             Scroller: React.forwardRef(({ style, ...props }, ref) => (
