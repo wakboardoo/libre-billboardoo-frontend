@@ -1,5 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline';
 import { classNames } from '@utils/classNames';
+import React from 'react';
 
 interface Props {
   className?: string
@@ -57,5 +58,7 @@ const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Pr
     </div>
   );
 };
+
+export const MemoizedChartItem = React.memo(ChartItem);
 
 export default ChartItem;

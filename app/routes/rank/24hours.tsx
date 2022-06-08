@@ -1,4 +1,4 @@
-import ChartItem from '@components/ChartItem';
+import { MemoizedChartItem } from '@components/ChartItem';
 import Play50Button from '@components/Play50Button';
 import RankHeader from '@components/RankHeader';
 import SmallHeader from '@components/SmallHeader';
@@ -106,7 +106,7 @@ const TwentyFourHoursRank = () => {
             ),
           }}
           itemContent={(index, item) => (
-            <ChartItem
+            <MemoizedChartItem
               id={item.videoIds[0]}
               rank={index + 1}
               rankChange={chartData[item.artist][item.title].previousRank.twentyFourHours - (index + 1)}
