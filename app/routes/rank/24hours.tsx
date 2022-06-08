@@ -104,6 +104,7 @@ const TwentyFourHoursRank = () => {
                 </div>
               </div>
             ),
+            Footer: () => <br/>,
           }}
           itemContent={(index, item) => (
             <MemoizedChartItem
