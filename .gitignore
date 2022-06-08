@@ -6,5 +6,5 @@ app/styles/app.css
 /.cache
 /.idea
 /build
-/public
+/public/build
 .env
