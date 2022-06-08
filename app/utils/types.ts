@@ -1,3 +1,9 @@
+export interface RankLoaderData {
+  title: string
+  ranks: RankResponse
+  chartData?: ChartDataResponse
+}
+
 export interface RankResponse {
   timestamp: number
   ranking: Ranking[]
