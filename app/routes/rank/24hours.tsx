@@ -7,7 +7,9 @@ import { useLoaderData } from '@remix-run/react';
 import type { ChartDataResponse, RankResponse } from '@utils/types';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import React from 'react';
 import { useEffect, useRef } from 'react';
+import { Virtuoso } from 'react-virtuoso';
 
 interface LoaderData {
   ranks: RankResponse
@@ -77,28 +79,34 @@ const TwentyFourHoursRank = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className='px-4 md:p-14'
+        className='h-full'
       >
-        <RankHeader title='24시간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
+        <Virtuoso
+          style={{ height: '100%' }}
+          className='space-y-3 px-4 md:p-14'
+          data={ranks.ranking}
+          components={{
+            Header: () => (
+              <>
+                <RankHeader title='24시간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
-        <div ref={buttonsRef} className='mt-5 flex gap-3'>
-          {getButtons()}
-        </div>
-
-        <ul className='mt-5 space-y-3'>
-          {ranks.ranking.map((item, index) => (
-            <li key={item.videoIds[0]}>
-              <ChartItem
-                id={item.videoIds[0]}
-                rank={index + 1}
-                rankChange={chartData[item.artist][item.title].previousRank.twentyFourHours - (index + 1)}
-                title={item.title}
-                artist={item.artist}
-                count={item.count}
-              />
-            </li>
-          ))}
-        </ul>
+                <div ref={buttonsRef} className='my-5 flex gap-3'>
+                  {getButtons()}
+                </div>
+              </>
+            ),
+          }}
+          itemContent={(index, item) => (
+            <ChartItem
+              id={item.videoIds[0]}
+              rank={index + 1}
+              rankChange={chartData[item.artist][item.title].previousRank.twentyFourHours - (index + 1)}
+              title={item.title}
+              artist={item.artist}
+              count={item.count}
+            />
+          )}
+        />
       </motion.div>
     </>
   );
