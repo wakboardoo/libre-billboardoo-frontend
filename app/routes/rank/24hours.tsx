@@ -85,13 +85,13 @@ const TwentyFourHoursRank = () => {
           data={ranks.ranking}
           components={{
             Scroller: React.forwardRef(({ style, ...props }, ref) => (
-              <div ref={ref} style={{ ...style }} className='' {...props}>
+              <div ref={ref} style={{ ...style }} {...props}>
                 <SmallHeader ref={headerRef} title='24시간 차트' buttons={getButtons()} />
                 {props.children}
               </div>
             )),
             List: React.forwardRef(({ style, children }, ref) => (
-              <div ref={ref} style={{ ...style }} className='mx-4 md:m-14 space-y-3'>
+              <div ref={ref} style={{ ...style }} className='mx-4 md:m-14'>
                 {children}
               </div>
             )),
@@ -107,6 +107,7 @@ const TwentyFourHoursRank = () => {
           }}
           itemContent={(index, item) => (
             <ChartItem
+              className='pb-3'
               id={item.videoIds[0]}
               rank={index + 1}
               rankChange={chartData[item.artist][item.title].previousRank.twentyFourHours - (index + 1)}
