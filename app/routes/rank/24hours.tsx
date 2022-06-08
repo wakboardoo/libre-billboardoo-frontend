@@ -91,12 +91,12 @@ const TwentyFourHoursRank = () => {
               </div>
             )),
             List: React.forwardRef(({ style, children }, ref) => (
-              <div ref={ref} style={{ ...style }} className='mx-4 md:m-14'>
+              <div ref={ref} style={{ ...style }} className='m-4 md:m-14 space-y-3'>
                 {children}
               </div>
             )),
             Header: () => (
-              <div className='mx-4 md:m-14'>
+              <div className='m-4 md:m-14'>
                 <RankHeader title='24시간 차트' updateDate={dayjs(ranks.timestamp * 1000)} />
 
                 <div ref={buttonsRef} className='my-5 flex gap-3'>
@@ -107,7 +107,6 @@ const TwentyFourHoursRank = () => {
           }}
           itemContent={(index, item) => (
             <ChartItem
-              className='pb-3'
               id={item.videoIds[0]}
               rank={index + 1}
               rankChange={chartData[item.artist][item.title].previousRank.twentyFourHours - (index + 1)}
