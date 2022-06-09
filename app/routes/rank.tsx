@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 
 const RankParent = () => {
-  const { title, ranks, chartData } = useMatches()[2].data as RankLoaderData;
+  const { name, title, ranks, chartData } = useMatches()[2].data as RankLoaderData;
 
   const ioRef = useRef<IntersectionObserver>();
   const buttonsRef = useRef<HTMLDivElement>();
@@ -112,7 +112,7 @@ const RankParent = () => {
             <MemoizedChartItem
               id={item.videoIds[0]}
               rank={index + 1}
-              rankChange={chartData ? chartData[item.artist][item.title].previousRank.twentyFourHours - (index + 1) : 'new'}
+              rankChange={chartData && name ? chartData[item.artist][item.title].previousRank[name] - (index + 1) : 'new'}
               title={item.title}
               artist={item.artist}
               count={item.count}

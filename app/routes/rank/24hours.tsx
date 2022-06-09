@@ -8,6 +8,7 @@ export const loader: LoaderFunction = async (): Promise<RankLoaderData> => {
   ]);
 
   return {
+    name: 'twentyFourHours',
     title: '24시간 차트',
     ranks: await ranks.json(),
     chartData: await chartData.json(),

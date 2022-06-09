@@ -8,6 +8,7 @@ export const loader: LoaderFunction = async (): Promise<RankLoaderData> => {
   ]);
 
   return {
+    name: 'allTime',
     title: '누적 차트',
     ranks: await ranks.json(),
     chartData: await chartData.json(),

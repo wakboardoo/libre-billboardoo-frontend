@@ -1,4 +1,6 @@
 export interface RankLoaderData {
+  name?: 'hourly' | 'twentyFourHours' | 'daily'
+  | 'weekly' | 'monthly' | 'yearly' | 'allTime'
   title: string
   ranks: RankResponse
   chartData?: ChartDataResponse
