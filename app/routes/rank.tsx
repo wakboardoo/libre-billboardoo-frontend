@@ -25,11 +25,22 @@ const headerStyle = css`
     --padding: 3.5rem;
   }
 
-  padding: calc((1 - var(--offset, 0)) * (var(--padding) - 1rem) + 1rem);
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  padding-top: calc((1 - var(--offset, 0)) * (var(--padding) - 1rem) + 1rem);
+  padding-bottom: calc((1 - var(--offset, 0)) * (var(--padding) - 1rem) + 1rem);
+
+  @media (max-width: 768px) {
+    padding: calc((1 - var(--offset, 0)) * (var(--padding) - 0.5rem) + 0.5rem);
+  }
 `;
 
 const titleStyle = css`
+  transform-origin: left 100%;
   transform: scale(calc((1 - var(--offset, 0)) * 0.3 + 0.7));
+
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
 
   @media (max-width: 768px) {
     transform: translateY(calc(-100% * var(--offset, 0)));
@@ -41,6 +52,9 @@ const infoStyle = css`
   max-height: calc((1 - var(--offset, 0)) * var(--padding));
   transform: translateY(calc(var(--offset, 0) * -100%));
   opacity: calc(100% * (1 - var(--offset, 0)));
+
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
 `;
 
 const buttonLayoutStyle = css`
@@ -50,18 +64,31 @@ const buttonLayoutStyle = css`
 
   top: calc(var(--header-height) - var(--padding) + 0.5rem);
   transform:
-    translateX(calc(var(--first-offset, 0) * (var(--header-width) - var(--button-width) - var(--padding) - 1rem)))
-    translateY(calc(-1 * var(--second-offset, 0) * (var(--header-height) - var(--padding) - var(--padding-top) + 0.5rem)));
+    translateX(calc(var(--first-offset, 0) * (var(--header-width) - var(--button-width) - var(--padding) - 3.5rem)))
+    translateY(calc(-1 * var(--second-offset, 0) * (var(--header-height) - var(--padding) - var(--padding-top) + 0rem)));
+
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
 
   @media (max-width: 768px) {
     --padding-top: 1rem;
+
+    transform:
+      translateX(calc(var(--first-offset, 0) * (var(--header-width) - var(--button-width) - var(--padding) - 1rem)))
+      translateY(calc(-1 * var(--second-offset, 0) * (var(--header-height) - var(--padding) - var(--padding-top) + 1rem)));
   }
 `;
 
 const searchStyle = css`
   overflow: hidden;
 
+  margin-top: calc(1rem * var(--offset, 0));
+
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+
   @media (max-width: 768px) {
+    opacity: calc(100% - var(--offset, 0) * 100%);
     margin-top: calc(var(--padding, 3.5rem) * (1 - var(--offset, 0)));
     max-height: calc((1 - var(--offset, 0)) * 56px);
   }
@@ -124,28 +151,21 @@ const RankParent = () => {
   }, []);
 
   const ignoreTime = useRef(0);
+  const lastOffset = useRef(0);
   const onScroll: React.UIEventHandler<'div'> = useCallback((event) => {
     if (headerRect && headerRef.current) {
-      if (event.timeStamp - ignoreTime.current < 16) return;
+      if (event.timeStamp - ignoreTime.current < 32) return;
 
       const target = event.target as HTMLDivElement;
 
       const top = target.scrollTop;
-      const offset = Math.min(top / (headerRect.height - 16 * 3.5), 1);
 
+      let offset = 0;
+      if (top > lastOffset.current) offset = 1;
       headerRef.current.style.setProperty('--offset', offset.toString());
-      ignoreTime.current = event.timeStamp;
-    }
-  }, [headerRect]);
 
-  const onScrollStateChanged = useCallback((isScrolling: boolean) => {
-    if (!isScrolling) {
-      if (scrollerRef.current && headerRect && headerRef.current) {
-        const top = scrollerRef.current.scrollTop;
-        const offset = Math.min(top / (headerRect.height - 16 * 3.5), 1);
-  
-        headerRef.current.style.setProperty('--offset', Math.round(offset).toString());
-      } 
+      ignoreTime.current = event.timeStamp;
+      lastOffset.current = top;
     }
   }, [headerRect]);
 
@@ -235,10 +255,10 @@ const RankParent = () => {
               </div>
             )),
             Header: () => <div className={'mb-8 md:mb-14'} style={{ height: headerRect?.height }} />,
-            Footer: () => <br/>,
+            Footer: () => <p />,
           }}
           onScroll={onScroll}
-          isScrolling={onScrollStateChanged}
+          computeItemKey={(_, item) => item.videoIds[0]}
           itemContent={(index, item) => (
             <MemoizedChartItem
               id={item.videoIds[0]}

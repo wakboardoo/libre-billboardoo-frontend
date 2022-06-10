@@ -7,7 +7,7 @@ import links from '@utils/links';
 
 const MobileHeader = () => {
   return (
-    <Disclosure as='header' className='z-50'>
+    <Disclosure as='header' className='z-[100]'>
       {({ open, close }) => (
         <>
           <div className='flex justify-between items-center pl-4 pr-2 py-2'>
@@ -28,7 +28,7 @@ const MobileHeader = () => {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Disclosure.Panel className='bg-black absolute w-full'>
+            <Disclosure.Panel className='bg-black absolute w-full z-[100]'>
               <div className="pt-0 pb-4 px-4 space-y-3">
                 {links.map((link) => (
                   <Link

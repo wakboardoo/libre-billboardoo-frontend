@@ -7,7 +7,7 @@ const Aside = () => {
   const location = useLocation();
 
   return (
-    <aside className='block w-1/5 lg:w-1/6 h-full bg-neutral-900 bg-opacity-60 overflow-y-auto'>
+    <aside className='block w-1/5 lg:w-1/6 h-full bg-neutral-900 bg-opacity-60 overflow-y-auto z-100'>
       <div className='flex flex-col gap-5 p-5'>
         <Link to='/'>
           <h1 className='font-semibold text-gray-50 text-2xl'>Billboardoo</h1>
