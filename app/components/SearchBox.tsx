@@ -1,16 +1,12 @@
 import { classNames } from '@utils/classNames';
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, HTMLProps } from 'react';
 
-interface Props {
-  onChange?: ChangeEventHandler<HTMLInputElement>
-}
-
-const SearchBox = ({ onChange }: Props) => {
+const SearchBox = (props: HTMLProps<HTMLInputElement>) => {
   return (
     <input
+      {...props}
       type='search'
       name='search'
-      onChange={onChange}
       placeholder='노래 제목 혹은 아티스트 이름'
       className={
         classNames(

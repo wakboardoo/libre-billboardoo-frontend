@@ -18,7 +18,7 @@ const DefaultLayout = ({ children }: Props) => {
     <>
       {!isMobile && <Aside />}
       {isMobile && <MobileHeader />}
-      <main className='h-full md:w-5/6 overflow-y-auto'>
+      <main className='h-full md:w-5/6 overflow-y-auto relative'>
         {children}
       </main>
       <Footer />
