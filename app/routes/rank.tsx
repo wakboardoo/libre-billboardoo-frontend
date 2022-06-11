@@ -101,7 +101,11 @@ const RankParent = () => {
   const buttonRef = useRef<HTMLDivElement>();
   const scrollerRef = useRef<HTMLElement>();
   const throttle = useRef<NodeJS.Timeout | null>(null);
-
+  const observer = useRef<ResizeObserver>();
+  
+  const isTransition = useRef(false);
+  const headerRectRef = useRef<DOMRect | null>(null);
+  const buttonRectRef = useRef<DOMRect | null>(null);
   const [headerRect, setHeaderRect] = useState<DOMRect | null>(null);
   const [buttonRect, setButtonRect] = useState<DOMRect | null>(null);
   const [keyword, setKeyword] = useState('');
@@ -124,31 +128,29 @@ const RankParent = () => {
     />
   ), [ranks.ranking]);
 
-  const getButtons = useCallback(() => {
-    if (ranks.ranking.length <= 50) {
-      return [button1to50];
-    } else {
-      return [button1to50, button51to100];
-    }
-  }, [ranks.ranking.length, button1to50, button51to100]);
-
   const getButtonRect = useCallback((div: HTMLDivElement | null) => {
     if (div) {
       buttonRef.current = div;
 
       const rect = div.getBoundingClientRect();
-      if (rect.width > 0) setButtonRect(rect);
+      if (rect.width > 0) {
+        setButtonRect(rect);
+        buttonRectRef.current = rect;
+      }
     }
-  }, []);
+  }, [buttonRef, buttonRectRef]);
 
   const getHeaderRect = useCallback((div: HTMLDivElement | null) => {
     if (div) {
       headerRef.current = div;
 
       const rect = div.getBoundingClientRect();
-      if (rect.height > 0) setHeaderRect(rect);
+      if (rect.height > 0) {
+        setHeaderRect(rect);
+        headerRectRef.current = rect;
+      }
     }
-  }, []);
+  }, [headerRectRef, headerRef]);
 
   const ignoreTime = useRef(0);
   const lastOffset = useRef(0);
@@ -163,6 +165,7 @@ const RankParent = () => {
       let offset = 0;
       if (top > lastOffset.current) offset = 1;
       headerRef.current.style.setProperty('--offset', offset.toString());
+      isTransition.current = true;
 
       ignoreTime.current = event.timeStamp;
       lastOffset.current = top;
@@ -186,6 +189,42 @@ const RankParent = () => {
     [ranks.ranking, keyword],
   );
 
+  const updateHeaderRect = useCallback(() => {
+    if (!buttonRef.current || !headerRef.current || isTransition.current) return;
+
+    const newHeaderRect = headerRef.current.getBoundingClientRect();
+    const newButtonRect = buttonRef.current.getBoundingClientRect();
+    
+    if (newHeaderRect.height !== headerRectRef.current?.height) {
+      const nowOffset = headerRef.current.style.getPropertyValue('--offset');
+      
+      if (nowOffset === '0') {
+        getHeaderRect(headerRef.current);
+      }
+    }
+    if (newHeaderRect.width !== headerRectRef.current?.width) {
+      getHeaderRect(headerRef.current);
+    }
+    if (newButtonRect.width !== buttonRectRef.current?.width) {
+      getButtonRect(buttonRef.current);
+    }
+  }, [getButtonRect, getHeaderRect]);
+
+  useEffect(() => {
+    if (!buttonRef.current || !headerRef.current) return;
+
+    if (!observer.current) {
+      observer.current = new ResizeObserver(updateHeaderRect);
+      observer.current.observe(headerRef.current);
+      observer.current.observe(buttonRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(ranks.ranking.length > 50);
+    setTimeout(() => updateHeaderRect(), 350);
+  }, [ranks.ranking.length > 50]);
+
   return (
     <DefaultLayout>
       <motion.div
@@ -197,6 +236,7 @@ const RankParent = () => {
         <Outlet />
 
         <div
+          onTransitionEnd={() => isTransition.current = false}
           ref={getHeaderRect}
           style={{
             '--header-height': `${headerRect?.height ?? 0}px`,
@@ -239,7 +279,8 @@ const RankParent = () => {
               buttonLayoutStyle,
             )}
           >
-            {getButtons()}
+            {button1to50}
+            {ranks.ranking.length > 50 && button51to100}
           </div>
         </div>
 
