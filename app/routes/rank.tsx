@@ -38,10 +38,16 @@ const RankParent = () => {
       const target = event.target as HTMLDivElement;
 
       const top = target.scrollTop;
+      const collapsed = top > lastOffset.current;
 
-      setIsCollapse(top > lastOffset.current);
+      if (!collapsed || top > (headerRect?.height ?? 0) / 2) {
+        setIsCollapse(top > lastOffset.current);
+      } else if (isCollapse) {
+        setIsCollapse(false);
+      }
+
       lastOffset.current = top;
-  }, [headerRect]);
+  }, [headerRect, headerRect?.height, isCollapse]);
 
   const onKeyword: React.FormEventHandler<HTMLInputElement> = useCallback((event) => {
     const { value } = event.currentTarget;
