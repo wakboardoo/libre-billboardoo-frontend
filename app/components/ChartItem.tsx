@@ -1,5 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline';
 import { classNames } from '@utils/classNames';
+import { motion } from 'framer-motion';
 import React from 'react';
 
 interface Props {
@@ -32,10 +33,28 @@ const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Pr
         <div className='flex flex-col md:flex-row justify-center items-center md:gap-3'>
           <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{rank}</span>
 
-          {rankChange === 'new' && <span className='w-4 text-center text-red-500 font-medium text-sm'>N</span>}
+          {rankChange === 'new' && (
+            <motion.span
+              className='w-4 text-center text-red-500 font-medium text-sm'
+              animate={{
+                opacity: ['0%', '100%'],
+                x: ['-50%', '0%'],
+              }}
+            >
+              N
+            </motion.span>
+          )}
           {rankChange > 0 && (
             <span className='flex gap-1 md:flex-col text-center text-green-500 font-medium text-sm'>
-              <ChevronUpIcon className='h-4 w-4' />
+              <motion.div
+                animate={{
+                  opacity: ['100%', '0%', '0%', '100%'],
+                  y: ['0%', '-50%', '50%', '0%'],
+                }}
+                transition={{ repeat: 1, delay: 0.5 }}
+              >
+                <ChevronUpIcon className='h-4 w-4' />
+              </motion.div>
               {rankChange}
             </span>
           )}
@@ -43,7 +62,15 @@ const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Pr
           {rankChange < 0 && (
             <span className='flex gap-1 flex-row-reverse md:flex-col items-center text-center text-red-500 font-medium text-sm'>
               {Math.abs(rankChange as number)}
-              <ChevronDownIcon className='h-4 w-4' />
+              <motion.div
+                animate={{
+                  opacity: ['100%', '0%', '0%', '100%'],
+                  y: ['0%', '50%', '-50%', '0%'],
+                }}
+                transition={{ repeat: 1, delay: 0.5 }}
+              >
+                <ChevronDownIcon className='h-4 w-4' />
+              </motion.div>
             </span>
           )}
         </div>
