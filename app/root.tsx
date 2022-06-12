@@ -33,6 +33,7 @@ export const links: LinksFunction = () => {
     },
   ];
 };
+
 export default function App() {
   const location = useLocation();
   const matches = useMatches();

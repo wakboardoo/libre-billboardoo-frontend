@@ -15,7 +15,7 @@ interface Props {
 const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Props) => {
   return (
     <div
-      className={classNames('group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3', className ?? '')}
+      className={classNames('box-border group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3', className ?? '')}
       onClick={() => {
         if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus();
       }}

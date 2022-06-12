@@ -9,7 +9,7 @@ interface Props {
 const Play50Button = ({ start, end, list }: Props) => {
   return (
     <button
-      className='flex gap-1 items-center bg-red-500 text-gray-50 rounded-lg md:rounded-xl p-2 md:p-3'
+      className='h-12 flex gap-1 items-center bg-red-500 text-gray-50 rounded-lg md:rounded-xl p-2 md:p-3 border-box'
       onClick={() => {
         if (window) window.open(`https://www.youtube.com/watch_videos?video_ids=${list.join(',')}`, '_blank');
       }}
