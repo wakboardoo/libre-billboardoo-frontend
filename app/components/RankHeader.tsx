@@ -1,11 +1,11 @@
-import { css, cx } from "@linaria/core";
-import { Ranking } from "@utils/types";
-import dayjs from "dayjs";
-import { motion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import Play50Button from "./Play50Button";
-import SearchBox from "./SearchBox";
+import { css, cx } from '@linaria/core';
+import type { Ranking } from '@utils/types';
+import dayjs from 'dayjs';
+import { motion } from 'framer-motion';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import Play50Button from './Play50Button';
+import SearchBox from './SearchBox';
 
 export const RankHeaderStyle = __linariaStyle;
 const headerStyle = css`
@@ -147,7 +147,7 @@ const RankHeader = React.forwardRef<HTMLDivElement, RankHeaderProps>((
             },
           }}
         >
-          {dayjs(timestamp * 1000).format(`M월 D일 a h시`)} 업데이트
+          {dayjs(timestamp * 1000).format('M월 D일 a h시')} 업데이트
         </motion.p>
       </motion.h1>
       <motion.div

@@ -1,21 +1,17 @@
 import { MemoizedChartItem } from '@components/ChartItem';
-import Play50Button from '@components/Play50Button';
 import RankHeader, { RankHeaderStyle } from '@components/RankHeader';
-import SearchBox from '@components/SearchBox';
 import DefaultLayout from '@layouts/DefaultLayout';
 import { Outlet, useMatches } from '@remix-run/react';
 import type { RankLoaderData } from '@utils/types';
-import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
-import useForceUpdate from '~/hooks/useForceUpdate';
 
 export const links = () => [
   {
     rel: 'stylesheet',
     href: RankHeaderStyle,
-  }
+  },
 ];
 
 const RankParent = () => {
@@ -32,22 +28,22 @@ const RankParent = () => {
     if (div && !headerRect) {
       setHeaderRect(div.getBoundingClientRect());
     }
-  }, [!!headerRect]);
+  }, [headerRect]);
 
   const onScroll: React.UIEventHandler<'div'> = useCallback((event) => {
-      const target = event.target as HTMLDivElement;
+    const target = event.target as HTMLDivElement;
 
-      const top = target.scrollTop;
-      const collapsed = top > lastOffset.current;
+    const top = target.scrollTop;
+    const collapsed = top > lastOffset.current;
 
-      if (!collapsed || top > (headerRect?.height ?? 0) / 2) {
-        setIsCollapse(top > lastOffset.current);
-      } else if (isCollapse) {
-        setIsCollapse(false);
-      }
+    if (!collapsed || top > (headerRect?.height ?? 0) / 2) {
+      setIsCollapse(top > lastOffset.current);
+    } else if (isCollapse) {
+      setIsCollapse(false);
+    }
 
-      lastOffset.current = top;
-  }, [headerRect, headerRect?.height, isCollapse]);
+    lastOffset.current = top;
+  }, [headerRect, isCollapse]);
 
   const onKeyword: React.FormEventHandler<HTMLInputElement> = useCallback((event) => {
     const { value } = event.currentTarget;
@@ -82,13 +78,19 @@ const RankParent = () => {
           data={filteredRanks}
           overscan={3}
           components={{
-            Footer: () => <p />,
+            Footer: () => <div>
+              <li>
+                <a href='https://docs.google.com/spreadsheets/d/1n8bRCE_OBUOND4pfhlqwEBMR6qifVLyWk5YrHclRWfY'>
+                  <div className='px-4 md:px-14 font-semibold text-gray-50'>데이터 수정 요청</div>
+                </a>
+              </li>
+            </div>,
             Header: () => <div style={{ height: headerRect?.height }} />,
           }}
           onScroll={onScroll}
           computeItemKey={(_, item) => item?.videoIds[0] ?? 'header'}
           itemContent={(index, item) => {
-            let changeRank: number | 'new' = 0;
+            let changeRank: number | 'new';
             if (!chartData || !name || chartData[item.artist][item.title].previousRank[name] === 0) changeRank = 'new';
             else changeRank = chartData[item.artist][item.title].previousRank[name] - item.rank;
 
