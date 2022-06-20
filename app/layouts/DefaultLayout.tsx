@@ -5,11 +5,7 @@ import MobileHeader from '@components/MobileHeader';
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 
-interface Props {
-  children?: React.ReactNode
-}
-
-const DefaultLayout = ({ children }: Props) => {
+const DefaultLayout = ({ children }: React.PropsWithChildren<never>) => {
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });

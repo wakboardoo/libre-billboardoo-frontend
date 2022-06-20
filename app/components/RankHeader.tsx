@@ -36,12 +36,14 @@ const headerStyle = css`
     &[data-animate="collapse"]::before {
       height: calc(3.5rem + 4rem);
     }
+    right: 16px;
   }
 
   @media (max-width: 767px) {
     &[data-animate="collapse"]::before {
       height: calc(1rem + 4rem);
     }
+    right: 0;
   }
 `;
 

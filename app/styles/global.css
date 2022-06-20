@@ -1,5 +1,18 @@
+@media (min-width: 767px) {
+  ::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(239 68 68);
+    border-radius: 8px;
+  }
+}
+
 * {
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     sans-serif;
+  scrollbar-color: rgb(239 68 68) black;
+  scrollbar-width: thin;
 }
