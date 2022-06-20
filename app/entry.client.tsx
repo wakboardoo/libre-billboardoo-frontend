@@ -1,7 +1,7 @@
 import { RemixBrowser } from '@remix-run/react';
-import { hydrate } from 'react-dom';
+import { hydrateRoot } from 'react-dom/client';
 
-hydrate(<RemixBrowser />, document);
+hydrateRoot(document, <RemixBrowser />);
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
