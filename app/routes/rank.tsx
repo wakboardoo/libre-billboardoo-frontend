@@ -70,8 +70,15 @@ const RankParent = () => {
         transition={{ duration: 0.5 }}
         className={'h-full'}
       >
+        <RankHeader
+          ref={getHeaderRect}
+          title={title}
+          rankings={ranks.ranking}
+          timestamp={ranks.timestamp}
+          collapsed={isCollapse}
+          onKeyword={onKeyword}
+        />
         <Outlet />
-
         <Virtuoso
           style={{ height: '100%', willChange: 'transform' }}
           className={'z-0 '}
@@ -107,14 +114,6 @@ const RankParent = () => {
               </div>
             );
           }}
-        />
-        <RankHeader
-          ref={getHeaderRect}
-          title={title}
-          rankings={ranks.ranking}
-          timestamp={ranks.timestamp}
-          collapsed={isCollapse}
-          onKeyword={onKeyword}
         />
       </motion.div>
     </DefaultLayout>

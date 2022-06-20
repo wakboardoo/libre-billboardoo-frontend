@@ -43,7 +43,7 @@ const headerStyle = css`
     &[data-animate="collapse"]::before {
       height: calc(1rem + 4rem);
     }
-    right: 0;
+    right: 8px;
   }
 `;
 
