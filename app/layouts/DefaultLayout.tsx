@@ -6,7 +6,7 @@ import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 interface Props {
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 const DefaultLayout = ({ children }: Props) => {
