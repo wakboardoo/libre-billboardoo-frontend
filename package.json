@@ -20,7 +20,7 @@
     "@linaria/core": "^3.0.0-beta.21",
     "@remix-run/node": "^1.6.2",
     "@remix-run/react": "^1.6.1",
-    "@remix-run/serve": "^1.6.1",
+    "@remix-run/serve": "^1.6.3",
     "@remix-run/server-runtime": "^1.6.1",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.3",
