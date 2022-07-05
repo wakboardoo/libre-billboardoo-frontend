@@ -6,6 +6,7 @@ import type { RankLoaderData } from '@utils/types';
 import { motion } from 'framer-motion';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
+import MusicPlayerBar from '@components/MusicPlayerBar';
 
 export const links = () => [
   {
@@ -85,7 +86,7 @@ const RankParent = () => {
           data={filteredRanks}
           overscan={3}
           components={{
-            Footer: () => <div>
+            Footer: () => <div style={{ paddingBottom: 75 }}>
               <li>
                 <a href='https://docs.google.com/spreadsheets/d/1n8bRCE_OBUOND4pfhlqwEBMR6qifVLyWk5YrHclRWfY'>
                   <div className='px-4 md:px-14 font-semibold text-gray-50'>데이터 수정 요청</div>
@@ -116,6 +117,7 @@ const RankParent = () => {
           }}
         />
       </motion.div>
+      <MusicPlayerBar />
     </DefaultLayout>
   );
 };

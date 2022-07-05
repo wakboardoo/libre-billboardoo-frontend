@@ -33,6 +33,7 @@
     "react-dom": "^18.2.0",
     "react-responsive": "9.0.0-beta.10",
     "react-virtuoso": "^2.16.1",
+    "react-youtube": "^9.0.2",
     "web-push": "^3.4.5"
   },
   "devDependencies": {
