@@ -15,9 +15,12 @@
     "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@headlessui/react": "^1.6.5",
     "@heroicons/react": "^1.0.6",
     "@linaria/core": "^3.0.0-beta.21",
+    "@mui/icons-material": "^5.8.4",
     "@remix-run/node": "^1.6.2",
     "@remix-run/react": "^1.6.3",
     "@remix-run/serve": "^1.6.1",
