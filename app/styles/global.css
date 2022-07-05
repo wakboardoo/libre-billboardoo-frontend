@@ -27,3 +27,12 @@
   scrollbar-color: rgb(239 68 68) black;
   scrollbar-width: thin;
 }
+
+.icon-enabled {
+  color: #fff;
+}
+
+.icon-disabled {
+  color: #888;
+}
+

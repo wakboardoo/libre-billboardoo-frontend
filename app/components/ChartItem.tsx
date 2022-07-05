@@ -11,15 +11,14 @@ interface Props {
   title: string
   artist: string
   count: number
+  onClick?: () => void
 }
 
-const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Props) => {
+const ChartItem = ({ className, id, rank, rankChange, title, artist, count, onClick }: Props) => {
   return (
     <div
       className={classNames('box-border group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3', className ?? '')}
-      onClick={() => {
-        if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus();
-      }}
+      onClick={onClick}
     >
       <div className='flex items-center gap-3'>
         <img

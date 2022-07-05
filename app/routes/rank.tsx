@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import MusicPlayerBar from '@components/MusicPlayerBar';
+import { CurrentVideoProvider } from '~/hooks/useCurrentVideo';
 
 export const links = () => [
   {
@@ -17,6 +18,8 @@ export const links = () => [
 
 const RankParent = () => {
   const { name, title, ranks, chartData } = useMatches()[2].data as RankLoaderData;
+
+  const [currentVideo, setCurrentVideo] = useState<string>();
 
   const throttle = useRef<NodeJS.Timeout | null>(null);
   const lastOffset = useRef(0);
@@ -111,13 +114,16 @@ const RankParent = () => {
                   title={item.title}
                   artist={item.artist}
                   count={item.count}
+                  onClick={() => setCurrentVideo(item.videoIds[0])}
                 />
               </div>
             );
           }}
         />
       </motion.div>
-      <MusicPlayerBar />
+      <CurrentVideoProvider value={currentVideo}>
+        { currentVideo && <MusicPlayerBar /> }
+      </CurrentVideoProvider>
     </DefaultLayout>
   );
 };
