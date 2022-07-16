@@ -30,11 +30,13 @@
 
 .icon-enabled {
     color: #fff;
+    fill: #fff;
     cursor: pointer;
 }
 
 .icon-disabled {
     color: #888;
+    fill: #888;
     cursor: pointer;
 }
 
@@ -60,6 +62,26 @@
     outline: none;
 }
 
+.progress::-moz-range-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: rgb(239 68 68);
+    border-radius: 50%;
+    outline: none;
+}
+
+.progress::-ms-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: rgb(239 68 68);
+    border-radius: 50%;
+    outline: none;
+}
+
 .volume {
     -webkit-appearance: none;
     width: 100px;
@@ -73,6 +95,26 @@
 }
 
 .volume::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    background: #FFF;
+    border-radius: 50%;
+    outline: none;
+}
+
+.volume::-moz-range-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    background: #FFF;
+    border-radius: 50%;
+    outline: none;
+}
+
+.volume::-ms-thumb {
     appearance: none;
     width: 10px;
     height: 10px;

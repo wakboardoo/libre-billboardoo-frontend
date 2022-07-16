@@ -20,6 +20,7 @@ import {
 } from '@mui/icons-material';
 import useCurrentVideo from '~/hooks/useCurrentVideo';
 import Marquee from 'react-fast-marquee';
+import { useMediaQuery } from 'react-responsive';
 
 const opts = {
   height: '0',
@@ -31,6 +32,10 @@ const opts = {
 };
 
 const MusicPlayerBar: React.FC = () => {
+  const isMobile = useMediaQuery({
+    query: '(max-width: 1024px)',
+  });
+
   const videoInfo = useCurrentVideo();
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -122,8 +127,9 @@ const MusicPlayerBar: React.FC = () => {
   }, [player]);
 
   return (
-    <div className={'fixed bottom-0 inset-x-0 bg-black flex flex-row h-20'}>
-      <div onClick={onToggleOpen}>
+    <div className={'fixed bottom-0 inset-x-0 bg-black flex flex-row h-20 justify-between'}
+         style={{ marginRight: isMobile ? 0 : 16 }}>
+      <div className={'flex justify-center items-center h-full'} onClick={onToggleOpen}>
         <YouTube
           videoId={videoInfo?.videoIds[0]}
           opts={opts}
@@ -134,68 +140,92 @@ const MusicPlayerBar: React.FC = () => {
         <img
           src={`https://i.ytimg.com/vi/${videoInfo?.videoIds[0]}/hqdefault.jpg`}
           alt={`${videoInfo?.artist} ${videoInfo?.title} 썸네일`}
-          loading='lazy'
-          decoding='async'
-          className='aspect-video object-cover object-center h-full'
+          loading={'lazy'}
+          decoding={'async'}
+          className={'object-cover object-center ' + (isMobile ? 'h-10 aspect-square ml-4' : 'h-full aspect-video')}
         />
       </div>
 
-      <div className={'flex flex-col justify-center items-center w-32'} onClick={onToggleOpen} style={{ minWidth: '8rem' }}>
-        <Marquee gradient={false}>
-          <div className={'flex flex-col justify-center items-center mx-2'}>
-            <p className={'text-white text-sm'}>{videoInfo?.title}</p>
-            <span className={'text-gray-400 text-xs text-center'}>{videoInfo?.artist}</span>
+      {isMobile ? (
+        <div className={'flex-1 flex flex-col justify-center items-start mx-2'}>
+          <p className={'text-white text-sm'}>{videoInfo?.title}</p>
+          <span className={'text-gray-400 text-xs text-center'}>{videoInfo?.artist}</span>
+        </div>
+      ) : (
+        <div className={'flex flex-col justify-center items-center w-32'}
+             onClick={onToggleOpen}
+             style={{ minWidth: '8rem' }}>
+          <Marquee gradient={false}>
+            <div className={'flex flex-col justify-center items-center mx-2'}>
+              <p className={'text-white text-sm'}>{videoInfo?.title}</p>
+              <span className={'text-gray-400 text-xs text-center'}>{videoInfo?.artist}</span>
+            </div>
+          </Marquee>
+        </div>
+      )}
+
+
+      <div className={'flex flex-row items-center justify-around w-32'}>
+        <SkipPrevious className={'icon-enabled w-6'}/> {/* TODO: Play list */}
+        <PlayOrPause style={{ width: '2.25rem', height: '2.25rem' }}
+                     className={'icon-enabled'}
+                     onClick={onTogglePlay}/>
+        <SkipNext className={'icon-enabled w-6'}/> {/* TODO: Play list */}
+      </div>
+
+      {isMobile ?
+        (<>
+          <div>
+            <input type={'range'}
+                   min={0}
+                   max={duration}
+                   value={currentTime}
+                   onChange={onSeek}
+                   style={{ background: `linear-gradient(to right, #EF4444 0%, #EF4444 ${percent}%, #606060 ${percent}%, #606060 100%)` }}
+                   className={'progress absolute w-full top-0 left-0'}/>
           </div>
-        </Marquee>
-      </div>
-
-      <div className={'flex flex-row w-full justify-between items-center'}>
-        <div className={'flex flex-row items-center justify-around'} style={{ width: 200 }}>
-          <SkipPrevious className={'icon-enabled'}/> {/* TODO: Play list */}
-          <PlayOrPause style={{ width: '2.25rem', height: '2.25rem' }} className={'icon-enabled'}
-                       onClick={onTogglePlay}/>
-          <SkipNext className={'icon-enabled'}/> {/* TODO: Play list */}
-          <small className={'text-white'} style={{ width: 75 }}>
-            {currentTimeText} / {durationText}
-          </small>
-        </div>
-
-        <div className={'flex-1 flex items-center'}>
-          <input
-            className={'w-full progress'}
-            type={'range'}
-            min={0}
-            max={duration}
-            value={currentTime}
-            onChange={onSeek}
-            style={{ background: `linear-gradient(to right, #EF4444 0%, #EF4444 ${percent}%, #606060 ${percent}%, #606060 100%)` }}
-          />
-        </div>
-
-        <div className={'flex flex-row justify-around items-center ml-5'} style={{ width: 300 }}>
-          <input
-            className={'volume'}
-            type={'range'} min={0} max={100} value={isMuted ? 0 : volume}
-            onChange={onChangeVolume}
-            style={{ background: `linear-gradient(to right, #FFF 0%, #FFF ${isMuted ? '0' : volume}%, #606060 ${isMuted ? '0' : volume}%, #606060 100%)` }}
-          />
-          <VolumeIcon className={isMuted ? 'icon-disabled' : 'icon-enabled'}
-                      onClick={onToggleMute}/>
-          <RepeatIcon className={repeatMode === 'NO_REPEAT' ? 'icon-disabled' : 'icon-enabled'}
-                      onClick={onToggleRepeat}/>
-          <Shuffle className={'icon-disabled'}/>
-          <a href={'https://youtu.be/' + videoInfo?.videoIds[0]} target={'_blank'}
-             rel={'noopener noreferrer'}>
-            <LinkIcon className={'icon-disabled'}/>
-          </a>
-          <motion.div animate={{ rotate: isOpen ? 0 : 180 }}>
-            <ArrowDropUpRounded className={isOpen ? 'icon-enabled' : 'icon-disabled'}
-                                style={{ width: 35, height: 35 }}
-                                onClick={onToggleOpen}/>
-          </motion.div>
-        </div>
-
-      </div>
+        </>) :
+        (
+          <>
+            <div className={'flex-1 flex items-center'}>
+              <small className={'text-white'} style={{ width: 75 }}>
+                {currentTimeText} / {durationText}
+              </small>
+              <input
+                className={'w-full progress'}
+                type={'range'}
+                min={0}
+                max={duration}
+                value={currentTime}
+                onChange={onSeek}
+                style={{ background: `linear-gradient(to right, #EF4444 0%, #EF4444 ${percent}%, #606060 ${percent}%, #606060 100%)` }}
+              />
+            </div>
+            <div className={'flex flex-row justify-around items-center ml-5'}
+                 style={{ width: 300 }}>
+              <input
+                className={'volume'}
+                type={'range'} min={0} max={100} value={isMuted ? 0 : volume}
+                onChange={onChangeVolume}
+                style={{ background: `linear-gradient(to right, #FFF 0%, #FFF ${isMuted ? '0' : volume}%, #606060 ${isMuted ? '0' : volume}%, #606060 100%)` }}
+              />
+              <VolumeIcon className={'w-6 ' + (isMuted ? 'icon-disabled' : 'icon-enabled')}
+                          onClick={onToggleMute}/>
+              <RepeatIcon className={'w-6 ' + (repeatMode === 'NO_REPEAT' ? 'icon-disabled' : 'icon-enabled')}
+                          onClick={onToggleRepeat}/>
+              <Shuffle className={'w-6 icon-disabled'}/>
+              <a href={'https://youtu.be/' + videoInfo?.videoIds[0]} target={'_blank'}
+                 rel={'noopener noreferrer'}>
+                <LinkIcon className={'w-6 icon-disabled'}/>
+              </a>
+              <motion.div animate={{ rotate: isOpen ? 0 : 180 }}>
+                <ArrowDropUpRounded className={isOpen ? 'icon-enabled' : 'icon-disabled'}
+                                    style={{ width: 35, height: 35 }}
+                                    onClick={onToggleOpen}/>
+              </motion.div>
+            </div>
+          </>
+        )}
     </div>
   );
 };
