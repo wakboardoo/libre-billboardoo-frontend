@@ -46,7 +46,7 @@ const MusicPlayerBar: React.FC = () => {
   const [repeatMode, setRepeatMode] = useState<'NO_REPEAT' | 'REPEAT_ONE' | 'REPEAT_ALL'>('NO_REPEAT');
   const [isOpen, setOpen] = useState(false);
 
-  const [timer, setTimer] = useState<never>();
+  const [timer, setTimer] = useState<any>();
 
   const percent = useMemo(() => (currentTime / duration) * 100, [currentTime, duration]);
 
