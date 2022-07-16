@@ -7,7 +7,8 @@ import { motion } from 'framer-motion';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import MusicPlayerBar from '@components/MusicPlayerBar';
-import { CurrentVideoProvider } from '~/hooks/useCurrentVideo';
+import type { MusicInfo } from '~/hooks/usePlayList';
+import { PlayListContext } from '~/hooks/usePlayList';
 
 export const links = () => [
   {
@@ -19,7 +20,8 @@ export const links = () => [
 const RankParent = () => {
   const { name, title, ranks, chartData } = useMatches()[2].data as RankLoaderData;
 
-  const [currentVideo, setCurrentVideo] = useState<Ranking>();
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [playList, setPlayList] = useState<MusicInfo[]>([]);
 
   const throttle = useRef<NodeJS.Timeout | null>(null);
   const lastOffset = useRef(0);
@@ -65,6 +67,21 @@ const RankParent = () => {
         || it.artist.toLowerCase().includes(keyword.toLowerCase())),
     [ranks.ranking, keyword],
   );
+
+  const onClickItem = useCallback((item: Ranking) => {
+    const info = {
+      videoId: item.videoIds[0],
+      title: item.title,
+      artist: item.artist,
+    };
+
+    const list = filteredRanks
+      .filter((it) => it.videoIds[0] !== info.videoId)
+      .map((it) => ({ title: it.title, artist: it.artist, videoId: it.videoIds[0] }));
+
+    setPlayList([info, ...list]);
+    setCurrentIndex(0);
+  }, [filteredRanks]);
 
   return (
     <DefaultLayout>
@@ -114,16 +131,21 @@ const RankParent = () => {
                   title={item.title}
                   artist={item.artist}
                   count={item.count}
-                  onClick={() => setCurrentVideo(item)}
+                  onClick={() => onClickItem(item)}
                 />
               </div>
             );
           }}
         />
       </motion.div>
-      <CurrentVideoProvider value={currentVideo}>
-        { currentVideo && <MusicPlayerBar /> }
-      </CurrentVideoProvider>
+      <PlayListContext.Provider value={{
+        playList,
+        setPlayList,
+        currentIndex,
+        setCurrentIndex,
+      }}>
+        { playList.length !== 0 && <MusicPlayerBar /> }
+      </PlayListContext.Provider>
     </DefaultLayout>
   );
 };

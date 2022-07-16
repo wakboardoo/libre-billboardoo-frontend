@@ -18,9 +18,9 @@ import {
   VolumeOff,
   ArrowDropUpRounded,
 } from '@mui/icons-material';
-import useCurrentVideo from '~/hooks/useCurrentVideo';
 import Marquee from 'react-fast-marquee';
 import { useMediaQuery } from 'react-responsive';
+import usePlayList from '~/hooks/usePlayList';
 
 const opts = {
   height: '0',
@@ -32,11 +32,10 @@ const opts = {
 };
 
 const MusicPlayerBar: React.FC = () => {
-  const isMobile = useMediaQuery({
-    query: '(max-width: 1024px)',
-  });
+  const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
 
-  const videoInfo = useCurrentVideo();
+  const playList = usePlayList();
+  const videoInfo = useMemo(() => playList.getCurrentMusic(), [playList]);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [player, setPlayer] = useState<YouTubePlayer>();
@@ -47,7 +46,7 @@ const MusicPlayerBar: React.FC = () => {
   const [repeatMode, setRepeatMode] = useState<'NO_REPEAT' | 'REPEAT_ONE' | 'REPEAT_ALL'>('NO_REPEAT');
   const [isOpen, setOpen] = useState(false);
 
-  const [timer, setTimer] = useState<any>();
+  const [timer, setTimer] = useState<never>();
 
   const percent = useMemo(() => (currentTime / duration) * 100, [currentTime, duration]);
 
@@ -131,15 +130,15 @@ const MusicPlayerBar: React.FC = () => {
          style={{ marginRight: isMobile ? 0 : 16 }}>
       <div className={'flex justify-center items-center h-full'} onClick={onToggleOpen}>
         <YouTube
-          videoId={videoInfo?.videoIds[0]}
+          videoId={videoInfo.videoId}
           opts={opts}
           onReady={onReady}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         />
         <img
-          src={`https://i.ytimg.com/vi/${videoInfo?.videoIds[0]}/hqdefault.jpg`}
-          alt={`${videoInfo?.artist} ${videoInfo?.title} 썸네일`}
+          src={`https://i.ytimg.com/vi/${videoInfo.videoId}/hqdefault.jpg`}
+          alt={`${videoInfo.artist} ${videoInfo.title} 썸네일`}
           loading={'lazy'}
           decoding={'async'}
           className={'object-cover object-center ' + (isMobile ? 'h-10 aspect-square ml-4' : 'h-full aspect-video')}
@@ -148,8 +147,8 @@ const MusicPlayerBar: React.FC = () => {
 
       {isMobile ? (
         <div className={'flex-1 flex flex-col justify-center items-start mx-2'}>
-          <p className={'text-white text-sm'}>{videoInfo?.title}</p>
-          <span className={'text-gray-400 text-xs text-center'}>{videoInfo?.artist}</span>
+          <p className={'text-white text-sm'}>{videoInfo.title}</p>
+          <span className={'text-gray-400 text-xs text-center'}>{videoInfo.artist}</span>
         </div>
       ) : (
         <div className={'flex flex-col justify-center items-center w-32'}
@@ -157,8 +156,8 @@ const MusicPlayerBar: React.FC = () => {
              style={{ minWidth: '8rem' }}>
           <Marquee gradient={false}>
             <div className={'flex flex-col justify-center items-center mx-2'}>
-              <p className={'text-white text-sm'}>{videoInfo?.title}</p>
-              <span className={'text-gray-400 text-xs text-center'}>{videoInfo?.artist}</span>
+              <p className={'text-white text-sm'}>{videoInfo.title}</p>
+              <span className={'text-gray-400 text-xs text-center'}>{videoInfo.artist}</span>
             </div>
           </Marquee>
         </div>
@@ -166,11 +165,13 @@ const MusicPlayerBar: React.FC = () => {
 
 
       <div className={'flex flex-row items-center justify-around w-32'}>
-        <SkipPrevious className={'icon-enabled w-6'}/> {/* TODO: Play list */}
+        <SkipPrevious className={'w-6 ' + (playList.getCurrentIndex() === 0 ? 'icon-disabled' : 'icon-enabled')}
+                      onClick={playList.previous}/>
         <PlayOrPause style={{ width: '2.25rem', height: '2.25rem' }}
                      className={'icon-enabled'}
                      onClick={onTogglePlay}/>
-        <SkipNext className={'icon-enabled w-6'}/> {/* TODO: Play list */}
+        <SkipNext className={'w-6 ' + (playList.getCurrentIndex() >= playList.getPlayList().length - 1 ? 'icon-disabled' : 'icon-enabled')}
+                  onClick={playList.next}/>
       </div>
 
       {isMobile ?
@@ -214,7 +215,7 @@ const MusicPlayerBar: React.FC = () => {
               <RepeatIcon className={'w-6 ' + (repeatMode === 'NO_REPEAT' ? 'icon-disabled' : 'icon-enabled')}
                           onClick={onToggleRepeat}/>
               <Shuffle className={'w-6 icon-disabled'}/>
-              <a href={'https://youtu.be/' + videoInfo?.videoIds[0]} target={'_blank'}
+              <a href={'https://youtu.be/' + videoInfo.videoId} target={'_blank'}
                  rel={'noopener noreferrer'}>
                 <LinkIcon className={'w-6 icon-disabled'}/>
               </a>
