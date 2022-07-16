@@ -45,6 +45,7 @@ const MusicPlayerBar: React.FC = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [repeatMode, setRepeatMode] = useState<'NO_REPEAT' | 'REPEAT_ONE' | 'REPEAT_ALL'>('NO_REPEAT');
   const [isOpen, setOpen] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
 
   const [timer, setTimer] = useState<any>();
 
@@ -102,6 +103,14 @@ const MusicPlayerBar: React.FC = () => {
     else setRepeatMode('NO_REPEAT');
   }, [repeatMode]);
   const onToggleOpen = useCallback(() => setOpen(!isOpen), [isOpen]);
+
+  const onShuffle = useCallback(() => {
+    playList.shuffle();
+    setShuffle(true);
+    setTimeout(() => {
+      setShuffle(false);
+    }, 100);
+  }, [playList]);
 
   const currentTimeText = useMemo(() => {
     const minutes = Math.floor(currentTime / 60);
@@ -228,8 +237,13 @@ const MusicPlayerBar: React.FC = () => {
               <RepeatIcon
                 className={'w-6 ' + (repeatMode === 'NO_REPEAT' ? 'icon-disabled' : 'icon-enabled')}
                 onClick={onToggleRepeat}/>
-              <Shuffle className={'w-6 icon-disabled'}
-                       onClick={playList.shuffle}/>
+              <motion.div
+                initial={{ rotateZ: 0 }}
+                animate={{ rotateZ: shuffle ? '360deg' : 0 }}
+              >
+                <Shuffle className={'w-6 icon-disabled'}
+                       onClick={onShuffle}/>
+              </motion.div>
               <a href={'https://youtu.be/' + videoInfo.videoId} target={'_blank'}
                  rel={'noopener noreferrer'}>
                 <LinkIcon className={'w-6 icon-disabled'}/>
