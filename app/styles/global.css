@@ -1,38 +1,83 @@
 @media (min-width: 767px) {
-  ::-webkit-scrollbar {
-    width: 16px;
-  }
+    ::-webkit-scrollbar {
+        width: 16px;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background: rgb(239 68 68);
-    border-radius: 8px;
-  }
+    ::-webkit-scrollbar-thumb {
+        background: rgb(239 68 68);
+        border-radius: 8px;
+    }
 }
 
 @media (max-width: 767px) {
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background: rgb(239 68 68);
-    border-radius: 4px;
-  }
+    ::-webkit-scrollbar-thumb {
+        background: rgb(239 68 68);
+        border-radius: 4px;
+    }
 }
 
 * {
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     sans-serif;
-  scrollbar-color: rgb(239 68 68) black;
-  scrollbar-width: thin;
+    scrollbar-color: rgb(239 68 68) black;
+    scrollbar-width: thin;
 }
 
 .icon-enabled {
-  color: #fff;
+    color: #fff;
+    cursor: pointer;
 }
 
 .icon-disabled {
-  color: #888;
+    color: #888;
+    cursor: pointer;
 }
 
+.progress {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    background: #414141;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.progress::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: rgb(239 68 68);
+    border-radius: 50%;
+    outline: none;
+}
+
+.volume {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 3px;
+    background: #606060;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.volume::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    background: #FFF;
+    border-radius: 50%;
+    outline: none;
+}

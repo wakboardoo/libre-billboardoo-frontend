@@ -2,7 +2,7 @@ import { MemoizedChartItem } from '@components/ChartItem';
 import RankHeader, { RankHeaderStyle } from '@components/RankHeader';
 import DefaultLayout from '@layouts/DefaultLayout';
 import { Outlet, useMatches } from '@remix-run/react';
-import type { RankLoaderData } from '@utils/types';
+import type { Ranking, RankLoaderData } from '@utils/types';
 import { motion } from 'framer-motion';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
@@ -19,7 +19,7 @@ export const links = () => [
 const RankParent = () => {
   const { name, title, ranks, chartData } = useMatches()[2].data as RankLoaderData;
 
-  const [currentVideo, setCurrentVideo] = useState<string>();
+  const [currentVideo, setCurrentVideo] = useState<Ranking>();
 
   const throttle = useRef<NodeJS.Timeout | null>(null);
   const lastOffset = useRef(0);
@@ -114,7 +114,7 @@ const RankParent = () => {
                   title={item.title}
                   artist={item.artist}
                   count={item.count}
-                  onClick={() => setCurrentVideo(item.videoIds[0])}
+                  onClick={() => setCurrentVideo(item)}
                 />
               </div>
             );
