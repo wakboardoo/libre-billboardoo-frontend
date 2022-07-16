@@ -115,6 +115,16 @@ const MusicPlayerBar: React.FC = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }, [duration]);
 
+  const onEnd = useCallback(() => {
+    if (repeatMode === 'NO_REPEAT') {
+      playList.next();
+    } else if (repeatMode === 'REPEAT_ONE') {
+      player?.playVideo();
+    } else {
+      playList.next(true);
+    }
+  }, [player, playList, repeatMode]);
+
   const onSeek = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const time = e.target.valueAsNumber;
     player?.seekTo(time);
@@ -135,6 +145,7 @@ const MusicPlayerBar: React.FC = () => {
           onReady={onReady}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
+          onEnd={onEnd}
         />
         <img
           src={`https://i.ytimg.com/vi/${videoInfo.videoId}/hqdefault.jpg`}
@@ -165,13 +176,15 @@ const MusicPlayerBar: React.FC = () => {
 
 
       <div className={'flex flex-row items-center justify-around w-32'}>
-        <SkipPrevious className={'w-6 ' + (playList.getCurrentIndex() === 0 ? 'icon-disabled' : 'icon-enabled')}
-                      onClick={playList.previous}/>
+        <SkipPrevious
+          className={'w-6 ' + (playList.getCurrentIndex() === 0 ? 'icon-disabled' : 'icon-enabled')}
+          onClick={() => playList.previous()}/>
         <PlayOrPause style={{ width: '2.25rem', height: '2.25rem' }}
                      className={'icon-enabled'}
                      onClick={onTogglePlay}/>
-        <SkipNext className={'w-6 ' + (playList.getCurrentIndex() >= playList.getPlayList().length - 1 ? 'icon-disabled' : 'icon-enabled')}
-                  onClick={playList.next}/>
+        <SkipNext
+          className={'w-6 ' + (playList.getCurrentIndex() >= playList.getPlayList().length - 1 ? 'icon-disabled' : 'icon-enabled')}
+          onClick={() => playList.next()}/>
       </div>
 
       {isMobile ?
@@ -212,9 +225,11 @@ const MusicPlayerBar: React.FC = () => {
               />
               <VolumeIcon className={'w-6 ' + (isMuted ? 'icon-disabled' : 'icon-enabled')}
                           onClick={onToggleMute}/>
-              <RepeatIcon className={'w-6 ' + (repeatMode === 'NO_REPEAT' ? 'icon-disabled' : 'icon-enabled')}
-                          onClick={onToggleRepeat}/>
-              <Shuffle className={'w-6 icon-disabled'}/>
+              <RepeatIcon
+                className={'w-6 ' + (repeatMode === 'NO_REPEAT' ? 'icon-disabled' : 'icon-enabled')}
+                onClick={onToggleRepeat}/>
+              <Shuffle className={'w-6 icon-disabled'}
+                       onClick={playList.shuffle}/>
               <a href={'https://youtu.be/' + videoInfo.videoId} target={'_blank'}
                  rel={'noopener noreferrer'}>
                 <LinkIcon className={'w-6 icon-disabled'}/>

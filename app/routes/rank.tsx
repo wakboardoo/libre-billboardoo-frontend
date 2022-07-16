@@ -99,7 +99,7 @@ const RankParent = () => {
           collapsed={isCollapse}
           onKeyword={onKeyword}
         />
-        <Outlet />
+        <Outlet/>
         <Virtuoso
           style={{ height: '100%', willChange: 'transform' }}
           className={'z-0 '}
@@ -108,12 +108,15 @@ const RankParent = () => {
           components={{
             Footer: () => <div style={{ paddingBottom: 75 }}>
               <li>
-                <a href='https://docs.google.com/spreadsheets/d/1n8bRCE_OBUOND4pfhlqwEBMR6qifVLyWk5YrHclRWfY'>
+                <a
+                  href='https://docs.google.com/spreadsheets/d/1n8bRCE_OBUOND4pfhlqwEBMR6qifVLyWk5YrHclRWfY'
+                  target={'_blank'}
+                  rel={'noopener noreferrer'}>
                   <div className='px-4 md:px-14 font-semibold text-gray-50'>데이터 수정 요청</div>
                 </a>
               </li>
             </div>,
-            Header: () => <div style={{ height: headerRect?.height }} />,
+            Header: () => <div style={{ height: headerRect?.height }}/>,
           }}
           onScroll={onScroll}
           computeItemKey={(_, item) => item?.videoIds[0] ?? 'header'}
@@ -144,7 +147,7 @@ const RankParent = () => {
         currentIndex,
         setCurrentIndex,
       }}>
-        { playList.length !== 0 && <MusicPlayerBar /> }
+        {playList.length !== 0 && <MusicPlayerBar/>}
       </PlayListContext.Provider>
     </DefaultLayout>
   );

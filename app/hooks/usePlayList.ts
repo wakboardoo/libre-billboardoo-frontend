@@ -8,16 +8,21 @@ export interface MusicInfo {
 
 interface PlayList {
   getCurrentIndex(): number;
+
   getCurrentMusic(): MusicInfo;
 
   getPlayList(): MusicInfo[];
 
   addMusic(music: MusicInfo): void;
+
   removeMusic(music: MusicInfo): void;
+
   clearPlayList(): void;
+
   shuffle(): void;
 
-  next(): void;
+  next(moveFirst?: boolean): void;
+
   previous(): void;
 }
 
@@ -26,7 +31,11 @@ export const PlayListContext = createContext<{
   setPlayList: (playList: MusicInfo[]) => void;
   currentIndex: number;
   setCurrentIndex: (currentIndex: number) => void;
-}>({ playList: [], setPlayList: () => {}, currentIndex: 0, setCurrentIndex: () => {} });
+}>({
+      playList: [], setPlayList: () => {
+      }, currentIndex: 0, setCurrentIndex: () => {
+      },
+    });
 
 const usePlayList = (): PlayList => {
   const {
@@ -59,13 +68,16 @@ const usePlayList = (): PlayList => {
       const newPlayList = [...playList];
       for (let i = newPlayList.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
+        if (i === currentIndex || j === currentIndex) continue;
         [newPlayList[i], newPlayList[j]] = [newPlayList[j], newPlayList[i]];
       }
       setPlayList(newPlayList);
     },
-    next() {
+    next(moveFirst) {
       if (currentIndex < playList.length - 1) {
         setCurrentIndex(currentIndex + 1);
+      } else if (moveFirst) {
+        setCurrentIndex(0);
       }
     },
     previous() {
