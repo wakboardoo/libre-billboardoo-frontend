@@ -9,6 +9,8 @@ export interface MusicInfo {
 interface PlayList {
   getCurrentIndex(): number;
 
+  setCurrentIndex(index: number): void;
+
   getCurrentMusic(): MusicInfo;
 
   getPlayList(): MusicInfo[];
@@ -16,6 +18,8 @@ interface PlayList {
   addMusic(music: MusicInfo): void;
 
   removeMusic(music: MusicInfo): void;
+
+  setPlayList(playList: MusicInfo[]): void;
 
   clearPlayList(): void;
 
@@ -38,54 +42,55 @@ export const PlayListContext = createContext<{
     });
 
 const usePlayList = (): PlayList => {
-  const {
-    playList,
-    setPlayList,
-    currentIndex,
-    setCurrentIndex,
-  } = useContext(PlayListContext);
+  const ctx = useContext(PlayListContext);
 
   return useMemo(() => ({
     getCurrentIndex() {
-      return currentIndex;
+      return ctx.currentIndex;
+    },
+    setCurrentIndex(index: number) {
+      ctx.setCurrentIndex(index);
     },
     getCurrentMusic(): MusicInfo {
-      return playList[currentIndex];
+      return ctx.playList[ctx.currentIndex];
     },
     getPlayList(): MusicInfo[] {
-      return playList;
+      return ctx.playList;
+    },
+    setPlayList(list: MusicInfo[]) {
+      ctx.setPlayList(list);
     },
     addMusic(music: MusicInfo) {
-      setPlayList([...playList, music]);
+      ctx.setPlayList([...ctx.playList, music]);
     },
     removeMusic(music: MusicInfo) {
-      setPlayList(playList.filter(item => item.videoId !== music.videoId));
+      ctx.setPlayList(ctx.playList.filter(item => item.videoId !== music.videoId));
     },
     clearPlayList() {
-      setPlayList([]);
+      ctx.setPlayList([]);
     },
     shuffle() {
-      const newPlayList = [...playList];
+      const newPlayList = [...ctx.playList];
       for (let i = newPlayList.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        if (i === currentIndex || j === currentIndex) continue;
+        if (i === ctx.currentIndex || j === ctx.currentIndex) continue;
         [newPlayList[i], newPlayList[j]] = [newPlayList[j], newPlayList[i]];
       }
-      setPlayList(newPlayList);
+      ctx.setPlayList(newPlayList);
     },
     next(moveFirst) {
-      if (currentIndex < playList.length - 1) {
-        setCurrentIndex(currentIndex + 1);
+      if (ctx.currentIndex < ctx.playList.length - 1) {
+        ctx.setCurrentIndex(ctx.currentIndex + 1);
       } else if (moveFirst) {
-        setCurrentIndex(0);
+        ctx.setCurrentIndex(0);
       }
     },
     previous() {
-      if (currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
+      if (ctx.currentIndex > 0) {
+        ctx.setCurrentIndex(ctx.currentIndex - 1);
       }
     },
-  }), [currentIndex, playList, setCurrentIndex, setPlayList]);
+  }), [ctx]);
 };
 
 export default usePlayList;
