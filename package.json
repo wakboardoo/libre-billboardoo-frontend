@@ -17,7 +17,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
-    "@linaria/core": "^4.0.0-beta.0",
+    "@linaria/core": "^4.0.0",
     "@remix-run/node": "^1.6.5",
     "@remix-run/react": "^1.6.5",
     "@remix-run/serve": "^1.6.5",
