@@ -114,7 +114,7 @@ const MusicPlayerBar: React.FC = () => {
   }, [playlist]);
 
   const currentTimeText = useMemo(() => {
-    const minutes = Math.floor(currentTime / 60);
+    const minutes = ~~(currentTime / 60);
     const seconds = Math.floor(currentTime % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }, [currentTime]);
