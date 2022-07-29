@@ -83,13 +83,13 @@ const MusicPlayerBar: React.FC = () => {
   }, [player, playlist, repeatMode]);
 
   const onTogglePlay = useCallback(() => {
-    if (isPlaying) {
-      player?.pauseVideo();
-    } else {
-      player?.playVideo();
-    }
-    setIsPlaying(!isPlaying);
-  }, [isPlaying, player]);
+    setIsPlaying((prevPlaying) => {
+      if(prevPlaying) player?.pauseVideo();
+      else player?.playVideo();
+
+      return !prevPlaying;
+    });
+  }, [player]);
   const onToggleMute = useCallback(() => {
     setIsMuted(!isMuted);
     if (isMuted) {
