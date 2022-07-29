@@ -47,8 +47,8 @@ const MusicPlayerBar: React.FC = () => {
   const VolumeIcon: SvgIconComponent = useMemo(() => {
     if (isMuted) return VolumeOff;
     if (volume === 0) return VolumeMute;
-    else if (volume < 50) return VolumeDown;
-    else return VolumeUp;
+    if (volume < 50) return VolumeDown;
+    return VolumeUp;
   }, [isMuted, volume]);
 
   const RepeatIcon: SvgIconComponent = useMemo(() => repeatMode === 'REPEAT_ONE' ? RepeatOne : Repeat, [repeatMode]);
