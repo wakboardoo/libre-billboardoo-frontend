@@ -38,7 +38,7 @@ const MusicPlayerBar: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
   const [shuffle, setShuffle] = useState(false);
 
-  const [timer, setTimer] = useState<any>();
+  const [timer, setTimer] = useState<NodeJS.Timer>();
 
   const percent = useMemo(() => (currentTime / duration) * 100, [currentTime, duration]);
 
