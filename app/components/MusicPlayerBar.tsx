@@ -66,7 +66,7 @@ const MusicPlayerBar: React.FC = () => {
       event.target?.unMute();
     }
 
-    clearInterval(timer);
+    if(timer) clearInterval(timer);
     setTimer(setInterval(() => {
       setCurrentTime(event.target?.getCurrentTime() ?? 0);
     }, 100));
