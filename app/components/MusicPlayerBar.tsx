@@ -91,19 +91,19 @@ const MusicPlayerBar: React.FC = () => {
     });
   }, [player]);
   const onToggleMute = useCallback(() => {
-    setIsMuted(!isMuted);
-    if (isMuted) {
-      player?.unMute();
-    } else {
-      player?.mute();
-    }
-  }, [player, isMuted]);
+    setIsMuted((prevMuted) => {
+      if (prevMuted) player?.unMute();
+      else player?.mute();
+
+      return !prevMuted;
+    });
+  }, [player]);
   const onToggleRepeat = useCallback(() => {
     if (repeatMode === 'NO_REPEAT') setRepeatMode('REPEAT_ALL');
     else if (repeatMode === 'REPEAT_ALL') setRepeatMode('REPEAT_ONE');
     else setRepeatMode('NO_REPEAT');
   }, [repeatMode]);
-  const onToggleOpen = useCallback(() => setOpen(!isOpen), [isOpen]);
+  const onToggleOpen = useCallback(() => setOpen((prevOpen) => !prevOpen), []);
 
   const onShuffle = useCallback(() => {
     playlist.shuffle();
