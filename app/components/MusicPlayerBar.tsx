@@ -66,7 +66,7 @@ const MusicPlayerBar: React.FC = () => {
       event.target?.unMute();
     }
 
-    if(timer) clearInterval(timer);
+    if (timer) clearInterval(timer);
     setTimer(setInterval(() => {
       setCurrentTime(event.target?.getCurrentTime() ?? 0);
     }, 100));
@@ -84,7 +84,7 @@ const MusicPlayerBar: React.FC = () => {
 
   const onTogglePlay = useCallback(() => {
     setIsPlaying((prevPlaying) => {
-      if(prevPlaying) player?.pauseVideo();
+      if (prevPlaying) player?.pauseVideo();
       else player?.playVideo();
 
       return !prevPlaying;
@@ -116,14 +116,13 @@ const MusicPlayerBar: React.FC = () => {
   const currentTimeText = useMemo(() => {
     const minutes = ~~(currentTime / 60);
     const seconds = Math.floor(currentTime % 60);
-    return `${minutes}:${seconds
-toString().padStart(2, '0')}`;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }, [currentTime]);
 
   const durationText = useMemo(() => {
-    const minutes = Math.floor(duration / 60);
+    const minutes = ~~(duration / 60);
     const seconds = Math.floor(duration % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }, [duration]);
 
   const onSeek = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
