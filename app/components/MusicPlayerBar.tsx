@@ -38,7 +38,7 @@ const MusicPlayerBar: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
   const [shuffle, setShuffle] = useState(false);
 
-  const [timer, setTimer] = useState<any>();
+  const [timer, setTimer] = useState<NodeJS.Timer>();
 
   const percent = useMemo(() => (currentTime / duration) * 100, [currentTime, duration]);
 
@@ -47,8 +47,8 @@ const MusicPlayerBar: React.FC = () => {
   const VolumeIcon: SvgIconComponent = useMemo(() => {
     if (isMuted) return VolumeOff;
     if (volume === 0) return VolumeMute;
-    else if (volume < 50) return VolumeDown;
-    else return VolumeUp;
+    if (volume < 50) return VolumeDown;
+    return VolumeUp;
   }, [isMuted, volume]);
 
   const RepeatIcon: SvgIconComponent = useMemo(() => repeatMode === 'REPEAT_ONE' ? RepeatOne : Repeat, [repeatMode]);
@@ -66,7 +66,7 @@ const MusicPlayerBar: React.FC = () => {
       event.target?.unMute();
     }
 
-    clearInterval(timer);
+    if(timer) clearInterval(timer);
     setTimer(setInterval(() => {
       setCurrentTime(event.target?.getCurrentTime() ?? 0);
     }, 100));
@@ -83,13 +83,13 @@ const MusicPlayerBar: React.FC = () => {
   }, [player, playlist, repeatMode]);
 
   const onTogglePlay = useCallback(() => {
-    if (isPlaying) {
-      player?.pauseVideo();
-    } else {
-      player?.playVideo();
-    }
-    setIsPlaying(!isPlaying);
-  }, [isPlaying, player]);
+    setIsPlaying((prevPlaying) => {
+      if(prevPlaying) player?.pauseVideo();
+      else player?.playVideo();
+
+      return !prevPlaying;
+    });
+  }, [player]);
   const onToggleMute = useCallback(() => {
     setIsMuted(!isMuted);
     if (isMuted) {
@@ -114,7 +114,7 @@ const MusicPlayerBar: React.FC = () => {
   }, [playlist]);
 
   const currentTimeText = useMemo(() => {
-    const minutes = Math.floor(currentTime / 60);
+    const minutes = ~~(currentTime / 60);
     const seconds = Math.floor(currentTime % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }, [currentTime]);
