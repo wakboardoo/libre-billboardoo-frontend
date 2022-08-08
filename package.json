@@ -15,9 +15,13 @@
     "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
-    "@linaria/core": "^4.1.1",
+    "@linaria/core": "^3.0.0-beta.22",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.9.3",
     "@remix-run/node": "^1.6.7",
     "@remix-run/react": "^1.6.7",
     "@remix-run/serve": "^1.6.7",
@@ -31,12 +35,14 @@
     "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.3.5",
     "react-responsive": "9.0.0-beta.10",
     "react-virtuoso": "^2.16.6",
+    "react-youtube": "^9.0.3",
     "web-push": "^3.4.5"
   },
   "devDependencies": {
-    "@linaria/esbuild": "^4.1.2",
+    "@linaria/esbuild": "^3.0.0-beta.22",
     "@remix-run/dev": "^1.6.7",
     "@remix-run/eslint-config": "^1.6.7",
     "@tailwindcss/forms": "^0.5.2",
