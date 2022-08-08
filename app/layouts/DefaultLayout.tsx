@@ -2,7 +2,7 @@ import Aside from '@components/Aside';
 import Footer from '@components/Footer';
 import MobileHeader from '@components/MobileHeader';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import MusicPlayerBar from '@components/MusicPlayerBar';
 import type { MusicInfo } from '~/hooks/usePlayList';
@@ -19,10 +19,6 @@ const DefaultLayout = ({ children }: Props) => {
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [playList, setPlayList] = useState<MusicInfo[]>([]);
-
-  useEffect(() => {
-    console.log(playList);
-  }, [playList]);
 
   return (
     <>

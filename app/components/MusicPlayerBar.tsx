@@ -53,6 +53,8 @@ const MusicPlayerBar: React.FC = () => {
 
   const RepeatIcon: SvgIconComponent = useMemo(() => repeatMode === 'REPEAT_ONE' ? RepeatOne : Repeat, [repeatMode]);
 
+
+  const stopPropagation = useCallback((e: React.MouseEvent) => e.stopPropagation(), []);
   const onReady = useCallback((event: YouTubeEvent) => {
     setPlayer(event.target);
     event.target?.playVideo();
@@ -82,7 +84,8 @@ const MusicPlayerBar: React.FC = () => {
     }
   }, [player, playlist, repeatMode]);
 
-  const onTogglePlay = useCallback(() => {
+  const onTogglePlay = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsPlaying((prevPlaying) => {
       if (prevPlaying) player?.pauseVideo();
       else player?.playVideo();
@@ -90,7 +93,19 @@ const MusicPlayerBar: React.FC = () => {
       return !prevPlaying;
     });
   }, [player]);
-  const onToggleMute = useCallback(() => {
+
+  const onSkipNext = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    playlist.next();
+  }, [playlist]);
+
+  const onSkipPrevious = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    playlist.previous();
+  }, [playlist]);
+
+  const onToggleMute = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsMuted((prevMuted) => {
       if (prevMuted) player?.unMute();
       else player?.mute();
@@ -98,14 +113,21 @@ const MusicPlayerBar: React.FC = () => {
       return !prevMuted;
     });
   }, [player]);
-  const onToggleRepeat = useCallback(() => {
+
+  const onToggleRepeat = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
     if (repeatMode === 'NO_REPEAT') setRepeatMode('REPEAT_ALL');
     else if (repeatMode === 'REPEAT_ALL') setRepeatMode('REPEAT_ONE');
     else setRepeatMode('NO_REPEAT');
   }, [repeatMode]);
-  const onToggleOpen = useCallback(() => setOpen((prevOpen) => !prevOpen), []);
 
-  const onShuffle = useCallback(() => {
+  const onToggleOpen = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+
+  const onShuffle = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
     playlist.shuffle();
     setShuffle(true);
     setTimeout(() => {
@@ -144,9 +166,10 @@ const MusicPlayerBar: React.FC = () => {
         onEnd={onEnd}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onClick={onToggleOpen}
       />
-      <div className={'fixed bottom-0 inset-x-0 bg-black flex flex-row h-20 justify-between z-50'}>
-        <div className={'flex justify-center items-center h-full'} onClick={onToggleOpen}>
+      <div className={'fixed bottom-0 inset-x-0 bg-black flex flex-row h-20 justify-between z-50'} onClick={onToggleOpen}>
+        <div className={'flex justify-center items-center h-full'}>
           <img
             src={`https://i.ytimg.com/vi/${videoInfo.videoId}/hqdefault.jpg`}
             alt={`${videoInfo.artist} ${videoInfo.title} 썸네일`}
@@ -163,7 +186,6 @@ const MusicPlayerBar: React.FC = () => {
           </div>
         ) : (
           <div className={'flex flex-col justify-center items-center w-32'}
-               onClick={onToggleOpen}
                style={{ minWidth: '8rem' }}>
             <Marquee gradient={false}>
               <div className={'flex flex-col justify-center items-center mx-2'}>
@@ -178,18 +200,18 @@ const MusicPlayerBar: React.FC = () => {
         <div className={'flex flex-row items-center justify-around w-32'}>
           <SkipPrevious
             className={'w-6 icon-enabled'}
-            onClick={() => playlist.previous()}/>
+            onClick={onSkipPrevious}/>
           <PlayOrPause style={{ width: '2.25rem', height: '2.25rem' }}
                        className={'icon-enabled'}
                        onClick={onTogglePlay}/>
           <SkipNext
             className={'w-6 icon-enabled'}
-            onClick={() => playlist.next()}/>
+            onClick={onSkipNext}/>
         </div>
 
         {isMobile ?
           (<>
-            <div>
+            <div onClick={stopPropagation}>
               <input type={'range'}
                      min={0}
                      max={duration}
@@ -212,6 +234,7 @@ const MusicPlayerBar: React.FC = () => {
                   max={duration}
                   value={currentTime}
                   onChange={onSeek}
+                  onClick={stopPropagation}
                   style={{ background: `linear-gradient(to right, #EF4444 0%, #EF4444 ${percent}%, #606060 ${percent}%, #606060 100%)` }}
                 />
               </div>
@@ -221,6 +244,7 @@ const MusicPlayerBar: React.FC = () => {
                   className={'volume'}
                   type={'range'} min={0} max={100} value={isMuted ? 0 : volume}
                   onChange={onChangeVolume}
+                  onClick={stopPropagation}
                   style={{ background: `linear-gradient(to right, #FFF 0%, #FFF ${isMuted ? '0' : volume}%, #606060 ${isMuted ? '0' : volume}%, #606060 100%)` }}
                 />
                 <VolumeIcon className={'w-6 ' + (isMuted ? 'icon-disabled' : 'icon-enabled')}
@@ -236,6 +260,8 @@ const MusicPlayerBar: React.FC = () => {
                            onClick={onShuffle}/>
                 </motion.div>
                 <a href={'https://youtu.be/' + videoInfo.videoId} target={'_blank'}
+                   title={'유튜브에서 보기'}
+                   onClick={stopPropagation}
                    rel={'noopener noreferrer'}>
                   <LinkIcon className={'w-6 icon-disabled'}/>
                 </a>

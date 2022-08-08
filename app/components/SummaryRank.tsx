@@ -9,10 +9,9 @@ interface Props {
   ranks: Ranking[]
 }
 
-const SummaryRank = ({ title, href, ranks }: Props) => {
-  let count = 1;
-
-  const mapFunction = (rank: Ranking) => (
+const SummaryRank: React.FC<Props> = ({ title, href, ranks  }) => {
+  // eslint-disable-next-line react/display-name
+  const mapFunction = (offset: number) => (rank: Ranking, index: number) => (
     <PlayListContext.Consumer>
       {(ctx) => (
         <div key={rank.videoIds[0]}
@@ -41,7 +40,7 @@ const SummaryRank = ({ title, href, ranks }: Props) => {
             className='aspect-video object-cover object-center w-16 md:w-20'
           />
 
-          <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{count++}</span>
+          <span className='w-6 md:w-8 text-gray-50 font-bold text-center'>{index + offset}</span>
 
           <div className='flex flex-col w-1/2'>
             <span className='text-gray-50 font-normal truncate'>{rank.title}</span>
@@ -62,10 +61,10 @@ const SummaryRank = ({ title, href, ranks }: Props) => {
       </h1>
       <div className='grid grid-flow-col no-scrollbar overflow-x-auto mt-3'>
         <div className='flex-row'>
-          {(ranks ? ranks.slice(0, 5) : []).map(mapFunction)}
+          {(ranks ? ranks.slice(0, 5) : []).map(mapFunction(1))}
         </div>
         <div className='flex-row'>
-          {(ranks ? ranks.slice(5, 10) : []).map(mapFunction)}
+          {(ranks ? ranks.slice(5, 10) : []).map(mapFunction(6))}
         </div>
       </div>
     </>
