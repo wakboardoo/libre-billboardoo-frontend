@@ -1,7 +1,9 @@
 import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline';
 import { classNames } from '@utils/classNames';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import { PlaylistAdd } from '@mui/icons-material';
+import usePlayList from '~/hooks/usePlayList';
 
 interface Props {
   className?: string
@@ -11,15 +13,37 @@ interface Props {
   title: string
   artist: string
   count: number
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 
-const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Props) => {
+const ChartItem = ({ className, id, rank, rankChange, title, artist, count, onClick }: Props) => {
+  const playlist = usePlayList();
+
+  const [isHover, setIsHover] = useState(false);
+
+  const onMouseEnter = useCallback(() => {
+    setIsHover(true);
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    setIsHover(false);
+  }, []);
+
+  const onAddClick = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    playlist.addMusic({
+      videoId: id,
+      title,
+      artist,
+    });
+  }, [playlist, id, title, artist]);
+
   return (
     <div
       className={classNames('box-border group w-full flex justify-between items-center p-2 hover:bg-neutral-900 cursor-pointer gap-3', className ?? '')}
-      onClick={() => {
-        if (window) window.open(`https://www.youtube.com/watch?v=${id}`, '_blank')?.focus();
-      }}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <div className='flex items-center gap-3'>
         <img
@@ -82,6 +106,12 @@ const ChartItem = ({ className, id, rank, rankChange, title, artist, count }: Pr
       </div>
 
       <span className='flex-1 text-right text-gray-400 font-normal truncate'>{artist}</span>
+
+      { isHover ? (
+        <div className={'flex flex-row items-center justify-around'}>
+          <PlaylistAdd data-value="remove" className={'icon-enabled'} onClick={onAddClick}/>
+        </div>
+      ) : null }
     </div>
   );
 };
