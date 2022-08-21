@@ -6,15 +6,7 @@ import type { MusicInfo } from '~/hooks/usePlayList';
 import usePlayList from '~/hooks/usePlayList';
 import { Virtuoso } from 'react-virtuoso';
 import { PlaylistRemove } from '@mui/icons-material';
-
-const opts = {
-  // height: '',
-  // width: '0',
-  playerVars: {
-    autoplay: 1,
-    controls: 0,
-  },
-};
+import { useMediaQuery } from 'react-responsive';
 
 interface ItemProps {
   item: MusicInfo;
@@ -24,7 +16,10 @@ interface ItemProps {
 }
 
 const PlayListItem: React.FC<ItemProps> = ({ item, selected, onClick, onRemove }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
   const [isHover, setHover] = useState(false);
+
+  const showRemove = useMemo(() => isMobile || isHover, [isMobile, isHover]);
 
   return (
     <div key={item.videoId}
@@ -47,9 +42,9 @@ const PlayListItem: React.FC<ItemProps> = ({ item, selected, onClick, onRemove }
         <p className={'text-white text-sm'}>{item.title}</p>
         <span className={'text-gray-400 text-xs text-center'}>{item.artist}</span>
       </div>
-      {isHover ? (
+      {showRemove ? (
         <div className={'flex flex-row items-center justify-around'}>
-          <PlaylistRemove data-value="remove" className={'icon-enabled'} onClick={(event) => {
+          <PlaylistRemove data-value="remove" className={'icon-enabled w-6'} onClick={(event) => {
             onRemove();
             event.stopPropagation();
           }}/>
@@ -73,8 +68,21 @@ const PlayerPage: React.FC<Props> = ({
   isOpen, videoId,
   onReady, onEnd, onPlay, onPause, onClick,
 }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
   const playlist = usePlayList();
   const playlistData = useMemo(() => playlist.getPlayList(), [playlist]);
+
+  const innerWidth = window.innerWidth;
+
+  const opts = {
+    height: isMobile ? innerWidth * 0.5625 : 360,
+    width: isMobile ? innerWidth : 640,
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+    },
+  };
 
   const stopPropagation = useCallback((event: React.MouseEvent) => {
     event.stopPropagation();
@@ -85,8 +93,9 @@ const PlayerPage: React.FC<Props> = ({
       onClick={onClick}
       initial={{ top: '100%' }}
       animate={{ top: isOpen ? '0%' : '100%' }}
-      className={'flex flex-row justify-center items-center fixed left-0 bg-black bg-opacity-90 w-full h-full z-10'}>
-
+      className={
+        'flex fixed left-0 bg-black bg-opacity-90 w-full h-full z-50 ' +
+        (isMobile ? 'flex-col' : 'flex-row justify-center items-center')}>
       <div
         onClick={stopPropagation}>
         <YouTube
@@ -99,7 +108,9 @@ const PlayerPage: React.FC<Props> = ({
         />
       </div>
       <div
-        style={{ height: '70%', width: '40%', marginLeft: 48 }}
+        style={
+          isMobile ? { width: '100%', height: `calc(100% - ${opts.height}px - 5rem)` } : { height: '70%', width: '40%', marginLeft: 48 }
+        }
         onClick={stopPropagation}>
         <Virtuoso
           style={{ height: '100%', width: '100%' }}

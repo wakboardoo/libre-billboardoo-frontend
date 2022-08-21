@@ -7,7 +7,7 @@ import links from '@utils/links';
 
 const MobileHeader = () => {
   return (
-    <Disclosure as='header' className='z-[100]'>
+    <Disclosure as='header' className='z-10'>
       {({ open, close }) => (
         <>
           <div className='flex justify-between items-center pl-4 pr-2 py-2'>

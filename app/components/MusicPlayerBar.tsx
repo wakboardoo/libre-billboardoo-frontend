@@ -12,7 +12,7 @@ import {
   VolumeDown,
   Shuffle,
   Repeat,
-  Link as LinkIcon,
+  YouTube as YouTubeIcon,
   RepeatOne,
   VolumeOff,
   ArrowDropUpRounded,
@@ -181,7 +181,15 @@ const MusicPlayerBar: React.FC = () => {
 
         {isMobile ? (
           <div className={'flex-1 flex flex-col justify-center items-start mx-2'}>
-            <p className={'text-white text-sm'}>{videoInfo.title}</p>
+            <div className={'flex flex-row items-center'}>
+              <p className={'text-white text-sm'}>{videoInfo.title}</p>
+              <a href={'https://youtu.be/' + videoInfo.videoId} target={'_blank'}
+                 title={'유튜브에서 보기'}
+                 onClick={stopPropagation}
+                 rel={'noopener noreferrer'}>
+                <YouTubeIcon className={'icon-enabled w-6 ml-1.5'}/>
+              </a>
+            </div>
             <span className={'text-gray-400 text-xs text-center'}>{videoInfo.artist}</span>
           </div>
         ) : (
@@ -263,7 +271,7 @@ const MusicPlayerBar: React.FC = () => {
                    title={'유튜브에서 보기'}
                    onClick={stopPropagation}
                    rel={'noopener noreferrer'}>
-                  <LinkIcon className={'w-6 icon-disabled'}/>
+                  <YouTubeIcon className={'w-6 icon-disabled'}/>
                 </a>
                 <motion.div animate={{ rotate: isOpen ? 0 : 180 }}>
                   <ArrowDropUpRounded className={isOpen ? 'icon-enabled' : 'icon-disabled'}
