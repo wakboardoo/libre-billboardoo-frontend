@@ -1,3 +1,4 @@
+import React from 'react';
 import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from '@remix-run/react';
 import { classNames } from '@utils/classNames';
@@ -24,7 +25,7 @@ const Aside = () => {
                   'md:text-lg lg:text-xl tracking-tight',
                 )}
               >
-                <TrendingUpIcon
+                <ArrowTrendingUpIcon
                   className={classNames(
                     location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 group-hover:text-gray-50',
                     'w-5 h-5 mr-2',

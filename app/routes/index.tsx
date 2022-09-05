@@ -1,3 +1,4 @@
+import React from 'react';
 import SummaryRank from '@components/SummaryRank';
 import DefaultLayout from '@layouts/DefaultLayout';
 import type { LoaderFunction } from '@remix-run/node';

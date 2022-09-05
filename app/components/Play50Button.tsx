@@ -1,3 +1,4 @@
+import React from 'react';
 import { PlayIcon } from '@heroicons/react/24/solid';
 
 interface Props {

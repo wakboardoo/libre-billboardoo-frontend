@@ -1,3 +1,4 @@
+import React from 'react';
 import { Disclosure, Transition } from '@headlessui/react';
 import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import Hamburger from 'hamburger-react';
@@ -41,7 +42,7 @@ const MobileHeader = () => {
                     )}
                     onClick={() => close()}
                   >
-                    <TrendingUpIcon
+                    <ArrowTrendingUpIcon
                       className={classNames(
                         location.pathname.startsWith(link.href) ? 'text-red-500' : 'text-gray-300 group-hover:text-gray-50',
                         'w-5 h-5 mr-2',

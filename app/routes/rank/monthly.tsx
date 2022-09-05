@@ -1,3 +1,4 @@
+import React from 'react';
 import type { LoaderFunction } from '@remix-run/node';
 import type { RankLoaderData } from '@utils/types';
 
