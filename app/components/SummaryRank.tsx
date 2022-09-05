@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from '@heroicons/react/outline';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { Link } from '@remix-run/react';
 import type { Ranking } from '@utils/types';
 import { PlayListContext } from '~/hooks/usePlayList';

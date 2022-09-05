@@ -1,4 +1,4 @@
-import { TrendingUpIcon } from '@heroicons/react/outline';
+import { TrendingUpIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from '@remix-run/react';
 import { classNames } from '@utils/classNames';
 import links from '@utils/links';

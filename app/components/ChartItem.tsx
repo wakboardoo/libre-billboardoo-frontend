@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon, ChevronUpIcon, MinusIcon } from '@heroicons/react/24/outline';
 import { classNames } from '@utils/classNames';
 import { motion } from 'framer-motion';
 import React, { useState, useCallback } from 'react';

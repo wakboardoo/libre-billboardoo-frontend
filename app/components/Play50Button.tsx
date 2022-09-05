@@ -1,4 +1,4 @@
-import { PlayIcon } from '@heroicons/react/solid';
+import { PlayIcon } from '@heroicons/react/24/solid';
 
 interface Props {
   start: number
