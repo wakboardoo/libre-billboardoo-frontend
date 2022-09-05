@@ -1,5 +1,5 @@
 import { Disclosure, Transition } from '@headlessui/react';
-import { TrendingUpIcon } from '@heroicons/react/24/outline';
+import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import Hamburger from 'hamburger-react';
 import { Link } from '@remix-run/react';
 import { classNames } from '@utils/classNames';
