@@ -15,7 +15,7 @@
     "postinstall": "remix-esbuild-override"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.0",
+    "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.0",
     "@headlessui/react": "^1.7.0",
     "@heroicons/react": "^2.0.10",
