@@ -47,7 +47,7 @@
     "@remix-run/eslint-config": "^1.7.0",
     "@tailwindcss/forms": "^0.5.3",
     "@types/node-persist": "^3.1.2",
-    "@types/react": "^18.0.18",
+    "@types/react": "^18.0.19",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
