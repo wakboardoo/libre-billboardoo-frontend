@@ -39,15 +39,15 @@ export default function Index() {
       <ul className='space-y-10'>
         {
           (() => {
-            if (festivalRank && festivalRank.length !== 0) {
-              return <li><SummaryRank title='고멤가요제 차트' href='/rank/festival' ranks={festivalRank} /></li>;
+            if (newRank && newRank.length !== 0) {
+              return <li><SummaryRank title='신곡 차트' href='/rank/new' ranks={newRank} /></li>;
             }
           })()
         }
         {
           (() => {
-            if (newRank && newRank.length !== 0) {
-              return <li><SummaryRank title='신곡 차트' href='/rank/new' ranks={newRank} /></li>;
+            if (festivalRank && festivalRank.length !== 0) {
+              return <li><SummaryRank title='고멤가요제 차트' href='/rank/festival' ranks={festivalRank} /></li>;
             }
           })()
         }
