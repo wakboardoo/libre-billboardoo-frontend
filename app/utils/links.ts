@@ -1,5 +1,9 @@
 const links = [
   {
+    name: '고멤가요제 차트',
+    href: '/rank/festival',
+  },
+  {
     name: '24시간 차트',
     href: '/rank/24hours',
   },

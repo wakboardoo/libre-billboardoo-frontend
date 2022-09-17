@@ -15,6 +15,7 @@ interface LoaderData {
   yearly: Ranking[]
   allTime: Ranking[]
   new: Ranking[]
+  festival: Ranking[]
 }
 
 export const loader: LoaderFunction = async (): Promise<LoaderData> => {
@@ -26,6 +27,7 @@ export default function Index() {
   const loaderData = useLoaderData<LoaderData>();
   const { hourly, twentyFourHours, daily, weekly, monthly, yearly, allTime } = loaderData;
   const newRank = loaderData.new;
+  const festivalRank = loaderData.festival;
 
   return <DefaultLayout>
     <motion.div
@@ -39,6 +41,13 @@ export default function Index() {
           (() => {
             if (newRank && newRank.length !== 0) {
               return <li><SummaryRank title='신곡 차트' href='/rank/new' ranks={newRank} /></li>;
+            }
+          })()
+        }
+        {
+          (() => {
+            if (festivalRank && festivalRank.length !== 0) {
+              return <li><SummaryRank title='고멤가요제 차트' href='/rank/festival' ranks={festivalRank} /></li>;
             }
           })()
         }
