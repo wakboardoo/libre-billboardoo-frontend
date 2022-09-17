@@ -18,7 +18,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@headlessui/react": "^1.7.2",
-    "@heroicons/react": "^2.0.10",
+    "@heroicons/react": "^2.0.11",
     "@linaria/core": "^3.0.0-beta.22",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
