@@ -19,7 +19,7 @@
     "@emotion/styled": "^11.10.4",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
-    "@linaria/core": "^3.0.0-beta.22",
+    "@linaria/core": "^4.1.3",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.9",
     "@remix-run/node": "^1.7.0",
