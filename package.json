@@ -52,7 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.42.1",
     "autoprefixer": "^10.4.12",
-    "concurrently": "^7.4.0",
+    "concurrently": "^7.5.0",
     "esbuild": "^0.15.13",
     "eslint": "^8.25.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
