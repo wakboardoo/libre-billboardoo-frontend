@@ -54,7 +54,7 @@
     "autoprefixer": "^10.4.12",
     "concurrently": "^7.5.0",
     "esbuild": "^0.15.13",
-    "eslint": "^8.25.0",
+    "eslint": "^8.27.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "postcss": "^8.4.18",
     "remix-esbuild-override": "^3.0.4",
