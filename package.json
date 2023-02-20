@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.13",
     "@linaria/core": "^4.2.2",
