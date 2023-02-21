@@ -21,7 +21,7 @@
     "@heroicons/react": "^2.0.13",
     "@linaria/core": "^4.2.2",
     "@mui/icons-material": "^5.11.9",
-    "@mui/material": "^5.10.13",
+    "@mui/material": "^5.11.10",
     "@remix-run/node": "^1.7.0",
     "@remix-run/react": "^1.12.0",
     "@remix-run/serve": "^1.13.0",
