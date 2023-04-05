@@ -20,7 +20,7 @@
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.17",
     "@linaria/core": "^4.2.2",
-    "@mui/icons-material": "^5.11.9",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.15",
     "@remix-run/node": "^1.7.0",
     "@remix-run/react": "^1.12.0",
