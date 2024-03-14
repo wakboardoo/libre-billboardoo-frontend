@@ -28,7 +28,7 @@
     "@remix-run/server-runtime": "^1.7.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.6",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.4.5",
     "framer-motion": "^9.0.2",
     "hamburger-react": "^2.5.0",
     "node-persist": "^3.1.3",
